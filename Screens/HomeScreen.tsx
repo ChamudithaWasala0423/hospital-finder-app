@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import React from 'react';
 import MenuBar from '../Components/MenuBar';
 
 const HomeScreen = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MenuBar />
-    </View>
+    </SafeAreaView>
   );
 };
 
