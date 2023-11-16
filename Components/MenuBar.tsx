@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React from 'react';
+import SparklesIcon from 'react-native-heroicons/solid';
 
 const MenuBar = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.subContainer}></View>
+      <View style={styles.subContainer}>
+        <SparklesIcon size={30} color="white" />
+      </View>
     </View>
   );
 };
