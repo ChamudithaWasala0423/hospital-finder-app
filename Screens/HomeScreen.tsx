@@ -4,6 +4,7 @@ import React from 'react';
 import MenuBar from '../Components/MenuBar';
 import {TagIcon, MicrophoneIcon} from 'react-native-heroicons/solid';
 import {MagnifyingGlassIcon} from 'react-native-heroicons/outline';
+import Category from '../Components/Category';
 
 const HomeScreen = () => {
   return (
@@ -12,7 +13,7 @@ const HomeScreen = () => {
         <View style={styles.subHeader}>
           <View style={styles.box}>
             <View style={styles.profileImg}>
-              <Text style={styles.profileText}>R</Text>
+              <Text style={styles.profileText}>M</Text>
             </View>
           </View>
           <View style={styles.boxTwo}>
@@ -40,7 +41,8 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
-        <View style={styles.mainCategory}></View>
+        {/* <View style={styles.mainCategory}></View> */}
+        <Category />
       </View>
       <MenuBar />
     </SafeAreaView>
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
     height: 150,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   subHeader: {
     width: '100%',
@@ -133,11 +135,6 @@ const styles = StyleSheet.create({
   searchText: {
     fontSize: 14,
     color: 'black',
-  },
-  mainCategory: {
-    width: '100%',
-    height: 100,
-    backgroundColor: 'white',
   },
 });
 
