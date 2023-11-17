@@ -2,7 +2,7 @@
 import {View, Text, StyleSheet, SafeAreaView, TextInput} from 'react-native';
 import React from 'react';
 import MenuBar from '../Components/MenuBar';
-import {TagIcon, MicrophoneIcon} from 'react-native-heroicons/solid';
+import {BookmarkIcon, MicrophoneIcon} from 'react-native-heroicons/solid';
 import {MagnifyingGlassIcon} from 'react-native-heroicons/outline';
 import Category from '../Components/Category';
 
@@ -21,7 +21,7 @@ const HomeScreen = () => {
             <Text style={styles.nameText}>Marques brownlee</Text>
           </View>
           <View style={styles.box}>
-            <TagIcon size={30} color="#0057e7" />
+            <BookmarkIcon size={30} color="#0057e7" />
           </View>
         </View>
         <View style={styles.subHeaderContainer}>
