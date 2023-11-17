@@ -36,7 +36,7 @@ const MenuBar = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 90,
+    height: 60,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
