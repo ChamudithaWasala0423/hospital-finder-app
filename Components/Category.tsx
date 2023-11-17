@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import React from 'react';
+import {TagIcon} from 'react-native-heroicons/solid';
 
 const Category = () => {
   return (
@@ -31,16 +32,30 @@ const Category = () => {
         <Text style={styles.titleText}>Near You</Text>
       </View>
       <ScrollView>
-        <View style={styles.subCatContainer}></View>
+        <View style={styles.subCatContainer}>
+          <View style={styles.catBox}>
+            <View style={styles.leftbox}>
+              <Image
+                source={require('../assets/Lanka_Hospitals_logo.png')}
+                style={styles.hosLogo}
+              />
+            </View>
+            <View style={styles.middlebox}>
+              <View style={styles.boxhead}>
+                <Text>Lanka Hospital</Text>
+                <TagIcon size={20} color="black" />
+              </View>
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   mainCategory: {
     width: '100%',
-    // backgroundColor: 'red',
+    height: 700,
   },
   box: {
     width: '100%',
@@ -91,8 +106,38 @@ const styles = StyleSheet.create({
   },
   subCatContainer: {
     width: '100%',
-    height: 200,
+    paddingHorizontal: 20,
+  },
+  catBox: {
+    width: '100%',
+    height: 130,
+    backgroundColor: 'white',
+    marginTop: 10,
+    borderRadius: 20,
+    flexDirection: 'row',
+  },
+  hosLogo: {
+    width: 60,
+    height: 60,
+  },
+  leftbox: {
+    width: '20%',
+    height: 130,
+    backgroundColor: 'red',
+    padding: 10,
+  },
+  middlebox: {
+    width: '80%',
+    height: 130,
     backgroundColor: 'blue',
+  },
+  boxhead: {
+    width: '100%',
+    height: 40,
+    backgroundColor: 'yellow',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
   },
 });
 
