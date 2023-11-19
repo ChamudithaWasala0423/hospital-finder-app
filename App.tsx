@@ -19,7 +19,7 @@ function App(): JSX.Element {
           name="HospitalList"
           component={HospitalListScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
           }}
         />
       </Stack.Navigator>

@@ -14,10 +14,12 @@ const MenuBar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        <View style={styles.icon}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => navigation.navigate('Home')}>
           <HomeIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Home</Text>
-        </View>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.icon}
