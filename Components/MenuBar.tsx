@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {
   Cog8ToothIcon,
@@ -7,8 +7,10 @@ import {
   ListBulletIcon,
   MapIcon,
 } from 'react-native-heroicons/outline';
+import {useNavigation} from '@react-navigation/native';
 
 const MenuBar = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
@@ -16,10 +18,13 @@ const MenuBar = () => {
           <HomeIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Home</Text>
         </View>
-        <View style={styles.icon}>
+
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => navigation.navigate('HospitalList')}>
           <ListBulletIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Hospital</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.icon}>
           <MapIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Map</Text>
