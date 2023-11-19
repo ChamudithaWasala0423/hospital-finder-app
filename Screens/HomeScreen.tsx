@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet, SafeAreaView, TextInput} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import React from 'react';
 import MenuBar from '../Components/MenuBar';
-import {BookmarkIcon, MicrophoneIcon} from 'react-native-heroicons/solid';
-import {MagnifyingGlassIcon} from 'react-native-heroicons/outline';
+import {BookmarkIcon} from 'react-native-heroicons/solid';
 import Category from '../Components/Category';
+import SearchBox from '../Components/SearchBox';
 
 const HomeScreen = () => {
   return (
@@ -21,29 +21,13 @@ const HomeScreen = () => {
             <Text style={styles.nameText}>Marques brownlee</Text>
           </View>
           <View style={styles.box}>
-            <BookmarkIcon size={30} color="#0057e7" />
+            <BookmarkIcon size={25} color="#0057e7" />
           </View>
         </View>
-        <View style={styles.subHeaderContainer}>
-          <View style={styles.searchBoxContainer}>
-            <View style={styles.searchBox}>
-              <MagnifyingGlassIcon size={20} color="#000" />
-            </View>
-            <View style={styles.searchBoxTwo}>
-              <TextInput
-                placeholder="Search for Hospital"
-                placeholderTextColor={'black'}
-                style={styles.searchText}
-              />
-            </View>
-            <View style={styles.searchBoxThree}>
-              <MicrophoneIcon size={20} color="#0057e7" />
-            </View>
-          </View>
-        </View>
-        {/* <View style={styles.mainCategory}></View> */}
+        <SearchBox />
         <Category />
       </View>
+
       <MenuBar />
     </SafeAreaView>
   );
@@ -56,8 +40,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: '100%',
-    height: 150,
-    // backgroundColor: 'red',
+    height: 240,
   },
   subHeader: {
     width: '100%',
@@ -97,43 +80,6 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: 'black',
-  },
-  subHeaderContainer: {
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  searchBoxContainer: {
-    width: '100%',
-    height: 50,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    flexDirection: 'row',
-  },
-  searchBox: {
-    width: '20%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchBoxTwo: {
-    width: '60%',
-    height: 50,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  searchBoxThree: {
-    width: '20%',
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  searchText: {
-    fontSize: 14,
     color: 'black',
   },
 });

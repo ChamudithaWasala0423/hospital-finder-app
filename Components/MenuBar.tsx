@@ -13,19 +13,19 @@ const MenuBar = () => {
     <View style={styles.container}>
       <View style={styles.subContainer}>
         <View style={styles.icon}>
-          <HomeIcon size={30} color="black" />
+          <HomeIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Home</Text>
         </View>
         <View style={styles.icon}>
-          <ListBulletIcon size={30} color="black" />
+          <ListBulletIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Hospital</Text>
         </View>
         <View style={styles.icon}>
-          <MapIcon size={30} color="black" />
+          <MapIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Map</Text>
         </View>
         <View style={styles.icon}>
-          <Cog8ToothIcon size={30} color="black" />
+          <Cog8ToothIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Setting</Text>
         </View>
       </View>
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 11,
-    color: 'black',
+    color: '#747474',
+    fontWeight: 'bold',
   },
 });
 

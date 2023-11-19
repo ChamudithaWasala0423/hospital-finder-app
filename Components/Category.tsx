@@ -35,7 +35,7 @@ const Category = () => {
         </View>
       </View>
       <View style={styles.box}>
-        <Text style={styles.titleTextTwo}>Near You</Text>
+        <Text style={styles.titleText}>Near You</Text>
       </View>
       <ScrollView>
         <View style={styles.subCatContainer}>
@@ -181,7 +181,6 @@ const Category = () => {
 const styles = StyleSheet.create({
   mainCategory: {
     width: '100%',
-    height: 700,
   },
   box: {
     width: '100%',
@@ -193,12 +192,6 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: 'bold',
     color: 'black',
-  },
-  titleTextTwo: {
-    fontSize: 23,
-    fontWeight: 'bold',
-    color: 'black',
-    marginTop: 30,
   },
   subConatiner: {
     width: '100%',
@@ -214,7 +207,7 @@ const styles = StyleSheet.create({
   },
   subBoxTwo: {
     width: '100%',
-    height: 190,
+    height: 160,
     backgroundColor: '#dae4f4',
     borderRadius: 20,
     padding: 20,
@@ -239,12 +232,12 @@ const styles = StyleSheet.create({
   subCatContainer: {
     width: '100%',
     paddingHorizontal: 20,
+    marginTop: 13,
   },
   catBox: {
     width: '100%',
     height: 155,
     backgroundColor: 'white',
-    marginTop: 10,
     borderRadius: 20,
     flexDirection: 'row',
   },
