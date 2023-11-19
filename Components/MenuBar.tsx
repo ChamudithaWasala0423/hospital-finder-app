@@ -27,10 +27,12 @@ const MenuBar = () => {
           <ListBulletIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Hospital</Text>
         </TouchableOpacity>
-        <View style={styles.icon}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => navigation.navigate('MapScreen')}>
           <MapIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Map</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.icon}>
           <Cog8ToothIcon size={25} color="#747474" />
           <Text style={styles.menuText}>Setting</Text>

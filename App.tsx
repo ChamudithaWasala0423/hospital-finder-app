@@ -8,6 +8,7 @@ import {
 import HomeScreen from './Screens/HomeScreen';
 import HospitalListScreen from './Screens/HospitalListScreen';
 import {NavigationContainer} from '@react-navigation/native';
+import MapScreen from './Screens/MapScreen';
 
 function App(): JSX.Element {
   const Stack = createStackNavigator();
@@ -18,6 +19,13 @@ function App(): JSX.Element {
         <Stack.Screen
           name="HospitalList"
           component={HospitalListScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+          }}
+        />
+        <Stack.Screen
+          name="MapScreen"
+          component={MapScreen}
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
           }}
