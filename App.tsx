@@ -9,6 +9,7 @@ import HomeScreen from './Screens/HomeScreen';
 import HospitalListScreen from './Screens/HospitalListScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import MapScreen from './Screens/MapScreen';
+import DirectionScreen from './Screens/DirectionScreen';
 // import {enableLatestRenderer} from 'react-native-maps';
 
 // enableLatestRenderer();
@@ -32,6 +33,13 @@ function App(): JSX.Element {
           options={{
             cardStyleInterpolator:
               CardStyleInterpolators.forModalPresentationIOS,
+          }}
+        />
+        <Stack.Screen
+          name="Direction"
+          component={DirectionScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}
         />
       </Stack.Navigator>

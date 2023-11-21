@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import MenuBar from '../Components/MenuBar';
 import SearchBox from '../Components/SearchBox';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {ListBulletIcon} from 'react-native-heroicons/solid';
+import {useNavigation} from '@react-navigation/native';
 
 const MapScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -14,7 +17,6 @@ const MapScreen = () => {
         </View>
         <SearchBox />
       </View>
-
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
@@ -35,6 +37,15 @@ const MapScreen = () => {
           pinColor="#00CCBB"
         />
       </MapView>
+      <View style={styles.bottomButton}>
+        <TouchableOpacity
+          style={styles.bottomSub}
+          onPress={() => navigation.navigate('Direction')}>
+          <ListBulletIcon size={25} color="#fff" />
+          <Text style={styles.bottomText}>View list</Text>
+        </TouchableOpacity>
+      </View>
+      <MenuBar />
     </View>
   );
 };
@@ -64,6 +75,28 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  bottomButton: {
+    width: '100%',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    marginTop: -140,
+  },
+  bottomSub: {
+    width: '35%',
+    height: 50,
+    backgroundColor: '#0057e7',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 10,
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+  },
+  bottomText: {
+    fontSize: 15,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 export default MapScreen;
