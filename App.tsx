@@ -9,6 +9,9 @@ import HomeScreen from './Screens/HomeScreen';
 import HospitalListScreen from './Screens/HospitalListScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import MapScreen from './Screens/MapScreen';
+// import {enableLatestRenderer} from 'react-native-maps';
+
+// enableLatestRenderer();
 
 function App(): JSX.Element {
   const Stack = createStackNavigator();
@@ -27,7 +30,8 @@ function App(): JSX.Element {
           name="MapScreen"
           component={MapScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forModalPresentationIOS,
           }}
         />
       </Stack.Navigator>
