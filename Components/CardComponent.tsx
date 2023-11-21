@@ -1,4 +1,4 @@
-// CardComponent.tsx
+
 import React, { ReactNode } from 'react';
 import { View, ViewStyle } from 'react-native';
 
