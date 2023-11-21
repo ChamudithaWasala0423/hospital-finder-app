@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import {AdjustmentsVerticalIcon} from 'react-native-heroicons/outline';
 import SearchNow from '../Components/SearchNow';
+import DirectionCard from '../Components/DirectionCard';
 
 const DirectionScreen = () => {
   return (
@@ -24,6 +25,9 @@ const DirectionScreen = () => {
       <View>
         <Text style={styles.headerText}>Results</Text>
       </View>
+      <ScrollView>
+        <DirectionCard />
+      </ScrollView>
     </SafeAreaView>
   );
 };

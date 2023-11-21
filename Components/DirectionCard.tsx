@@ -10,40 +10,76 @@ import {
 
 const DirectionCard = () => {
   return (
-    <View style={styles.subCatContainer}>
-      <View style={styles.catBox}>
-        <View style={styles.leftbox}>
-          <Image
-            source={require('../assets/Lanka_Hospitals_logo.png')}
-            style={styles.hosLogo}
-          />
-        </View>
-        <View style={styles.middlebox}>
-          <View style={styles.boxhead}>
-            <Text style={styles.boxText}>Lanka Hospital</Text>
-            <BookmarkIcon size={20} color="#0057e7" />
+    <>
+      <View style={styles.subCatContainer}>
+        <View style={styles.catBox}>
+          <View style={styles.leftbox}>
+            <Image
+              source={require('../assets/Lanka_Hospitals_logo.png')}
+              style={styles.hosLogo}
+            />
           </View>
-          <View style={styles.boxmiddle}>
-            <Text>Hospital</Text>
-            <Text>171 1/1, Nawala Road, Nugegoda, Sri Lanka. </Text>
-          </View>
-          <View style={styles.boxbottom}>
-            <View style={styles.buttomOne}>
-              <PhoneIcon size={20} color="#0057e7" />
-              <Text style={styles.buttontext}>Call</Text>
+          <View style={styles.middlebox}>
+            <View style={styles.boxhead}>
+              <Text style={styles.boxText}>Lanka Hospital</Text>
+              <BookmarkIcon size={20} color="#0057e7" />
             </View>
-            <View style={styles.buttomTwo}>
-              <MapPinIcon size={20} color="#fff" />
-              <Text style={{color: '#fff'}}>Direction</Text>
+            <View style={styles.boxmiddle}>
+              <Text>Hospital</Text>
+              <Text>171 1/1, Nawala Road, Nugegoda, Sri Lanka. </Text>
             </View>
-            <View style={styles.buttomOne}>
-              <ShareIcon size={20} color="#0057e7" />
-              <Text style={styles.buttontext}>Share</Text>
+            <View style={styles.boxbottom}>
+              <View style={styles.buttomOne}>
+                <PhoneIcon size={20} color="#0057e7" />
+                <Text style={styles.buttontext}>Call</Text>
+              </View>
+              <View style={styles.buttomTwo}>
+                <MapPinIcon size={20} color="#fff" />
+                <Text style={{color: '#fff'}}>Direction</Text>
+              </View>
+              <View style={styles.buttomOne}>
+                <ShareIcon size={20} color="#0057e7" />
+                <Text style={styles.buttontext}>Share</Text>
+              </View>
             </View>
           </View>
         </View>
       </View>
-    </View>
+      <View style={styles.subCatContainer}>
+        <View style={styles.catBox}>
+          <View style={styles.leftbox}>
+            <Image
+              source={require('../assets/Lanka_Hospitals_logo.png')}
+              style={styles.hosLogo}
+            />
+          </View>
+          <View style={styles.middlebox}>
+            <View style={styles.boxhead}>
+              <Text style={styles.boxText}>Lanka Hospital</Text>
+              <BookmarkIcon size={20} color="#0057e7" />
+            </View>
+            <View style={styles.boxmiddle}>
+              <Text>Hospital</Text>
+              <Text>171 1/1, Nawala Road, Nugegoda, Sri Lanka. </Text>
+            </View>
+            <View style={styles.boxbottom}>
+              <View style={styles.buttomOne}>
+                <PhoneIcon size={20} color="#0057e7" />
+                <Text style={styles.buttontext}>Call</Text>
+              </View>
+              <View style={styles.buttomTwo}>
+                <MapPinIcon size={20} color="#fff" />
+                <Text style={{color: '#fff'}}>Direction</Text>
+              </View>
+              <View style={styles.buttomOne}>
+                <ShareIcon size={20} color="#0057e7" />
+                <Text style={styles.buttontext}>Share</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </>
   );
 };
 
