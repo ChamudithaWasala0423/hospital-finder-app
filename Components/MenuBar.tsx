@@ -6,36 +6,51 @@ import {
   HomeIcon,
   ListBulletIcon,
   MapIcon,
-} from 'react-native-heroicons/outline';
-import {useNavigation} from '@react-navigation/native';
+} from 'react-native-heroicons/solid';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const MenuBar = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const getIconColor = (screenName: string) => {
+    return route.name === screenName ? '#00f' : '#747474'; // Use your desired colors
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
         <TouchableOpacity
           style={styles.icon}
           onPress={() => navigation.navigate('Home')}>
-          <HomeIcon size={25} color="#747474" />
-          <Text style={styles.menuText}>Home</Text>
+          <HomeIcon size={25} color={getIconColor('Home')} />
+          <Text style={{...styles.menuText, color: getIconColor('Home')}}>
+            Home
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.icon}
           onPress={() => navigation.navigate('HospitalList')}>
-          <ListBulletIcon size={25} color="#747474" />
-          <Text style={styles.menuText}>Hospital</Text>
+          <ListBulletIcon size={25} color={getIconColor('HospitalList')} />
+          <Text
+            style={{...styles.menuText, color: getIconColor('HospitalList')}}>
+            Hospital
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.icon}
           onPress={() => navigation.navigate('MapScreen')}>
-          <MapIcon size={25} color="#747474" />
-          <Text style={styles.menuText}>Map</Text>
+          <MapIcon size={25} color={getIconColor('MapScreen')} />
+          <Text style={{...styles.menuText, color: getIconColor('MapScreen')}}>
+            Map
+          </Text>
         </TouchableOpacity>
         <View style={styles.icon}>
-          <Cog8ToothIcon size={25} color="#747474" />
-          <Text style={styles.menuText}>Setting</Text>
+          <Cog8ToothIcon size={25} color={getIconColor('Settings')} />
+          <Text style={{...styles.menuText, color: getIconColor('Settings')}}>
+            Setting
+          </Text>
         </View>
       </View>
     </View>
