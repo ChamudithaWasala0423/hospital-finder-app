@@ -1,14 +1,56 @@
 /* eslint-disable prettier/prettier */
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import MenuBar from '../Components/MenuBar';
 import SearchBox from '../Components/SearchBox';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {ListBulletIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
+import Geolocation from 'react-native-geolocation-service';
+import axios from 'axios';
 
 const MapScreen = () => {
   const navigation = useNavigation();
+
+  const [region, setRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
+  const [hospitals, setHospitals] = useState([]);
+
+  useEffect(() => {
+    // Get current location
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        setRegion({
+          latitude,
+          longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+
+        // Fetch nearby hospitals using Google Places API
+        const apiKey = 'AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8';
+        const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=hospital&key=${apiKey}`;
+
+        axios
+          .get(apiUrl)
+          .then(response => {
+            setHospitals(response.data.results);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+      error => console.error(error),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+    );
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -17,25 +59,18 @@ const MapScreen = () => {
         </View>
         <SearchBox />
       </View>
-      <MapView
-        style={styles.map}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 7.481917,
-          longitude: 80.360423,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
-        }}>
-        <Marker
-          coordinate={{
-            latitude: 7.481917, //resturant.lat
-            longitude: 80.360423, //resturant.long
-          }}
-          title="Origin"
-          description="This is the origin"
-          identifier="origin"
-          pinColor="#00CCBB"
-        />
+      <MapView style={styles.map} provider={PROVIDER_GOOGLE} region={region}>
+        {hospitals.map(hospital => (
+          <Marker
+            key={hospital.place_id}
+            coordinate={{
+              latitude: hospital.geometry.location.lat,
+              longitude: hospital.geometry.location.lng,
+            }}
+            title={hospital.name}
+            description={hospital.vicinity}
+          />
+        ))}
       </MapView>
       <View style={styles.bottomButton}>
         <TouchableOpacity
