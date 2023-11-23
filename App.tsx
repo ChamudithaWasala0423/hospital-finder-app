@@ -23,7 +23,7 @@ import Select from './Screens/Select';
 const App: React.FC = () => {
   return (
    
-      <SignUp/>
+      <Login/>
       
      
     
