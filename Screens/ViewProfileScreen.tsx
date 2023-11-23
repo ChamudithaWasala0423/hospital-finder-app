@@ -1,6 +1,17 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ImageBackground, Image } from 'react-native';
+import { SparklesIcon } from "react-native-heroicons/solid";
+import {
+  
+  UserCircleIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  HomeIcon,
+  CakeIcon,
+
+} from 'react-native-heroicons/outline';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import MenuBar from '../Components/MenuBar';
 import CardComponent from '../Components/CardComponent';
 import ButtonComponent from '../Components/ButtonComponent';
@@ -14,7 +25,7 @@ const ViewProfileScreen = () => {
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>User Details</Text>
-
+       
         <CardComponent color="#5387e0" width="90%" height="30%" marginTop={40} marginBottom={10} alignItems="center" justifyContent="center">
           {/* Custom content for the first card */}
           <View style={styles.cardContent}>
@@ -40,19 +51,60 @@ const ViewProfileScreen = () => {
         </CardComponent>
 
         <CardComponent color="white" width="90%" height="49%" marginTop={0} marginBottom={20} alignItems="flex-start" justifyContent="flex-start">
-          {/* New section */}
-          <Text style={styles.sectionTitle}>Accounts</Text>
-          <Text style={styles.sectionItem}>personal information</Text>
-          <Text style={styles.sectionItem}>country</Text>
-          <Text style={styles.sectionItem}>language</Text>
-          <View style={styles.horizontalLine} />
+        <View>
+      
+    </View>
+        <View style={styles.userInfoContainer}>
+            {/* User Icon */}
+            <UserCircleIcon width={35} height={35} color="#5387e0" />
 
-          <Text style={styles.sectionTitle}>General</Text>
-          <Text style={styles.sectionItem}>notifications</Text>
-          <Text style={styles.sectionItem}>privacy policy</Text>
-          <Text style={styles.sectionItem}>terms of use</Text>
-          <Text style={styles.sectionItem}>rate us</Text>
-          <Text style={styles.sectionItem}>Logout</Text>
+            {/* Username and Tag */}
+            <View style={styles.userdetailsContainer}>
+              <Text style={[styles.tags, { opacity: 0.6 }]}>Username</Text>
+              <Text style={styles.sectionItemBold}>Chanuka Jayasinghe</Text>
+            </View>
+          </View>
+          
+          <View style={styles.userInfoContainer}>
+            {/* User Icon */}
+            <EnvelopeIcon width={35} height={35} color="#5387e0" />
+
+            {/* Username and Tag */}
+            <View style={styles.userdetailsContainer}>
+              <Text style={[styles.tags, { opacity: 0.6 }]}>Email</Text>
+              <Text style={styles.sectionItemBold}>chanuka@email.com</Text>
+            </View>
+          </View>
+          <View style={styles.userInfoContainer}>
+            {/* User Icon */}
+            <PhoneIcon width={35} height={35} color="#5387e0"/>
+
+            {/* Username and Tag */}
+            <View style={styles.userdetailsContainer}>
+              <Text style={[styles.tags, { opacity: 0.6 }]}>Contact number</Text>
+              <Text style={styles.sectionItemBold}>+94 77 255 632</Text>
+            </View>
+          </View>
+          <View style={styles.userInfoContainer}>
+            {/* User Icon */}
+            <HomeIcon width={35} height={35} color="#5387e0"/>
+
+            {/* Username and Tag */}
+            <View style={styles.userdetailsContainer}>
+              <Text style={[styles.tags, { opacity: 0.6 }]}>Address</Text>
+              <Text style={styles.sectionItemBold}>18, Obawatta Road, Srijayawardenapura</Text>
+            </View>
+          </View>
+          <View style={styles.userInfoContainer}>
+            {/* User Icon */}
+            <CakeIcon width={35} height={35} color="#5387e0"/>
+
+            {/* Username and Tag */}
+            <View style={styles.userdetailsContainer}>
+              <Text style={[styles.tags, { opacity: 0.6 }]}>Birthday</Text>
+              <Text style={styles.sectionItemBold}>1995-07-13</Text>
+            </View>
+          </View>
         </CardComponent>
 
         <MenuBar />
@@ -107,38 +159,38 @@ const styles = StyleSheet.create({
     
   },
   userInfoContainer: {
-    marginLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 12,
+  },
+
+  userdetailsContainer: {
+    marginLeft: 30,
+    flexDirection: 'column',  // Change to column direction
+    alignItems: 'flex-start', 
+    justifyContent: 'flex-start',// Align items to the start
+
   },
  
   buttonContainer: {
     flexDirection: 'row',
   },
-  sectionTitle: {
-    fontSize: 24,
+  
+  tags: {
+    fontSize: 15,
     fontWeight: 'bold',
-    color: 'black',
-    marginVertical: 5,
-    marginLeft: 10,
+    color: '#5387e0',
+    marginVertical: 1,
+   
   },
   sectionItemBold: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
-    marginTop: 5,
+    marginTop: 0,
 
   },
-  sectionItem: {
-    fontSize: 20,
-    color: 'grey',
-    marginVertical: 5,
-    marginLeft: 10,
-  },
-  horizontalLine: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1, // or adjust as needed
-    width: '100%',
-    marginVertical: 30,
-  },
+ 
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',

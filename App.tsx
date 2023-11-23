@@ -6,7 +6,7 @@ import SettingScreen from './Screens/SettingScreen';
 import ViewProfileScreen from './Screens/ViewProfileScreen';
 
 function App(): JSX.Element {
-  return <SettingScreen />;
+  return <ViewProfileScreen />;
 }
 
 export default App;
