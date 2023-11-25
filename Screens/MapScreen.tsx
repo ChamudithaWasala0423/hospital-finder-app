@@ -68,7 +68,7 @@ const MapScreen: React.FC = () => {
           title: 'My Location',
           description: 'This is my current location',
           identifier: 'myLocation',
-          pinColor: '#FF5733', // You can choose your own color
+          pinColor: '#FF5733',
         };
         setUserLocation(userLocationMarker);
         getNearbyHospitals(position.coords.latitude, position.coords.longitude);

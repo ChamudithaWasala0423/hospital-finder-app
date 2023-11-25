@@ -1,11 +1,38 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, View, Text, StyleSheet, ScrollView} from 'react-native';
 import {AdjustmentsVerticalIcon} from 'react-native-heroicons/outline';
 import SearchNow from '../Components/SearchNow';
 import DirectionCard from '../Components/DirectionCard';
+import Geolocation from '@react-native-community/geolocation';
 
 const DirectionScreen = () => {
+  const [hospitalData, setHospitalData] = useState<any>({results: []});
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(position);
+        fetchData(position.coords.latitude, position.coords.longitude);
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+    const fetchData = async (latitude: number, longitude: number) => {
+      try {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=hospital&key=AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8`,
+        );
+        const data = await response.json();
+        setHospitalData(data);
+      } catch (error) {
+        console.error('Error fetching hospital data:', error);
+      }
+    };
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchNow />
@@ -26,7 +53,13 @@ const DirectionScreen = () => {
         <Text style={styles.headerText}>Results</Text>
       </View>
       <ScrollView>
-        <DirectionCard />
+        {hospitalData.results.map((hospital, index) => (
+          <DirectionCard
+            key={index}
+            name={hospital.name}
+            address={hospital.vicinity}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -77,4 +110,5 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+
 export default DirectionScreen;
