@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: 150,
   },
   subHeader: {
     width: '100%',

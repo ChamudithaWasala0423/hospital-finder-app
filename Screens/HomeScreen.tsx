@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: '100%',
-    height: 240,
+    height: 320,
   },
   subHeader: {
     width: '100%',
