@@ -8,6 +8,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
+import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -59,5 +60,4 @@ public class MainApplication extends Application implements ReactApplication {
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
-
 }

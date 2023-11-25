@@ -12,7 +12,7 @@ import SearchBox from '../Components/SearchBox';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {ListBulletIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 
 const MapScreen = () => {
   const navigation = useNavigation();
