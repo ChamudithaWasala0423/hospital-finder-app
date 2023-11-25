@@ -55,12 +55,11 @@ const styles = StyleSheet.create({
   },
   subConatiner: {
     width: '100%',
-    height: 190,
+
     flexDirection: 'row',
   },
   subBox: {
     width: '50%',
-    height: 190,
     borderRadius: 20,
     paddingHorizontal: 20,
     alignItems: 'center',
