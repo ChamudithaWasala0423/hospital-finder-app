@@ -10,7 +10,6 @@ import {
 
 interface DirectionCardProps {
   name: string;
-  hospitalType: string;
   address: string;
   hospitalPhone: string;
   hospitalImages: string[];
