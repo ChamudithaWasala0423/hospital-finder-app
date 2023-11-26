@@ -27,7 +27,6 @@ const HomeScreen = () => {
         <SearchBox />
         <Category />
       </View>
-
       <MenuBar />
     </SafeAreaView>
   );
