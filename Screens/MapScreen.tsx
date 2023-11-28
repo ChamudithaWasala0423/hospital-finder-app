@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {ListBulletIcon} from 'react-native-heroicons/solid';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import SearchBox from '../Components/SearchBox';
@@ -28,10 +28,47 @@ const MapScreen: React.FC = () => {
   const navigation = useNavigation();
   const [nearbyHospitals, setNearbyHospitals] = useState<MarkerData[]>([]);
   const [userLocation, setUserLocation] = useState<MarkerData | null>(null);
+  const mapRef = useRef<MapView>(null);
+  const route = useRoute();
+  const [searchLocation, setSearchLocation] = useState<MarkerData | null>(null);
 
   useEffect(() => {
     requestLocationPermission();
   }, []);
+
+  // useEffect(() => {
+  //   if (route.params && route.params.location) {
+  //     // Handle the passed location data here
+  //     const selectedLocation = route.params.location;
+  //     // Do something with the selected location data if needed
+  //     console.log('Selected location from params:', selectedLocation);
+  //   }
+  // }, [route.params]);
+
+  useEffect(() => {
+    if (route.params && route.params.location) {
+      // Handle the passed location data here
+      const selectedLocation = route.params.location;
+
+      const searchLocationMarker: MarkerData = {
+        latitude: selectedLocation.coords.latitude,
+        longitude: selectedLocation.coords.longitude,
+        title: selectedLocation.main_text,
+        description: selectedLocation.secondary_text,
+        identifier: 'myLocation',
+        pinColor: 'green',
+      };
+
+      setSearchLocation(searchLocationMarker);
+      // You might want to animate to the new user location
+      mapRef.current?.animateToRegion({
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
+      });
+    }
+  }, [route.params]);
 
   const requestLocationPermission = async () => {
     try {
@@ -61,7 +98,7 @@ const MapScreen: React.FC = () => {
   const getLoaction = () => {
     Geolocation.getCurrentPosition(
       position => {
-        console.log(position);
+        // console.log(position);
         const userLocationMarker: MarkerData = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -71,6 +108,13 @@ const MapScreen: React.FC = () => {
           pinColor: '#FF5733',
         };
         setUserLocation(userLocationMarker);
+        // Animate to the user's current location
+        mapRef.current?.animateToRegion({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        });
         getNearbyHospitals(position.coords.latitude, position.coords.longitude);
       },
       error => {
@@ -112,14 +156,11 @@ const MapScreen: React.FC = () => {
         <SearchBox />
       </View>
       <MapView
+        ref={mapRef}
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 7.481917,
-          longitude: 80.360423,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
-        }}>
+        showsUserLocation={true}
+        followsUserLocation={true}>
         {userLocation && (
           <Marker
             coordinate={{
@@ -130,6 +171,19 @@ const MapScreen: React.FC = () => {
             description={userLocation.description}
             identifier={userLocation.identifier}
             pinColor={userLocation.pinColor}
+          />
+        )}
+
+        {searchLocation && (
+          <Marker
+            coordinate={{
+              latitude: searchLocation.latitude,
+              longitude: searchLocation.longitude,
+            }}
+            title={searchLocation.title}
+            description={searchLocation.description}
+            identifier={searchLocation.identifier}
+            pinColor={searchLocation.pinColor}
           />
         )}
 

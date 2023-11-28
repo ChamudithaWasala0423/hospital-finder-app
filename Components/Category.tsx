@@ -59,13 +59,29 @@ const Category = () => {
         <Text style={styles.titleText}>Near You</Text>
       </View>
       <ScrollView>
-        {hospitalData.results.map((hospital, index) => (
-          <DirectionCard
-            key={index}
-            name={hospital.name}
-            address={hospital.vicinity}
-          />
-        ))}
+        {hospitalData.results.map(
+          (
+            hospital: {
+              name: string;
+              vicinity: string;
+              types: string[][];
+              formatted_phone_number: string;
+              opening_hours: string;
+              icon: string;
+            },
+            index: React.Key | null | undefined,
+          ) => (
+            <DirectionCard
+              key={index}
+              name={hospital.name}
+              address={hospital.vicinity}
+              type={hospital.types[0]}
+              hospitalPhone={hospital.formatted_phone_number}
+              openingHours={hospital.opening_hours}
+              logo={hospital.icon}
+            />
+          ),
+        )}
       </ScrollView>
     </View>
   );

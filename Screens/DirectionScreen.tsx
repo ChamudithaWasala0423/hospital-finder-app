@@ -12,7 +12,6 @@ const DirectionScreen = () => {
   useEffect(() => {
     Geolocation.getCurrentPosition(
       position => {
-        console.log(position);
         fetchData(position.coords.latitude, position.coords.longitude);
       },
       error => {
@@ -26,7 +25,22 @@ const DirectionScreen = () => {
           `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=hospital&key=AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8`,
         );
         const data = await response.json();
-        setHospitalData(data);
+
+        const detailsPromises = data.results.map(async (hospital: any) => {
+          const detailsResponse = await fetch(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${hospital.place_id}&key=AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8`,
+          );
+          const detailsData = await detailsResponse.json();
+
+          const phone = detailsData.result.formatted_phone_number;
+          return {
+            ...hospital,
+            phone: phone,
+          };
+        });
+
+        const hospitalsWithPhone = await Promise.all(detailsPromises);
+        setHospitalData({results: hospitalsWithPhone});
       } catch (error) {
         console.error('Error fetching hospital data:', error);
       }
@@ -53,13 +67,29 @@ const DirectionScreen = () => {
         <Text style={styles.headerText}>Results</Text>
       </View>
       <ScrollView>
-        {hospitalData.results.map((hospital, index) => (
-          <DirectionCard
-            key={index}
-            name={hospital.name}
-            address={hospital.vicinity}
-          />
-        ))}
+        {hospitalData.results.map(
+          (
+            hospital: {
+              name: string;
+              vicinity: string;
+              types: string[][];
+              phone: string;
+              opening_hours: string;
+              icon: string;
+            },
+            index: React.Key | null | undefined,
+          ) => (
+            <DirectionCard
+              key={index}
+              name={hospital.name}
+              address={hospital.vicinity}
+              type={hospital.types[0]}
+              hospitalPhone={hospital.phone}
+              openingHours={hospital.opening_hours}
+              logo={hospital.icon}
+            />
+          ),
+        )}
       </ScrollView>
     </SafeAreaView>
   );

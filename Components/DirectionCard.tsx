@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Linking} from 'react-native';
 import React from 'react';
 import {
   MapPinIcon,
@@ -7,29 +7,39 @@ import {
   BookmarkIcon,
   ShareIcon,
 } from 'react-native-heroicons/solid';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface DirectionCardProps {
   name: string;
   address: string;
   hospitalPhone: string;
-  hospitalImages: string[];
+  logo: string;
+  type: string[];
+  openingHours: string;
 }
 
 const DirectionCard: React.FC<DirectionCardProps> = ({
   name,
-  hospitalType,
+  type,
   address,
   hospitalPhone,
-  hospitalImages,
+  logo,
+  openingHours,
 }) => {
+  const isOpenNow = openingHours;
+
+  const callHospital = () => {
+    if (hospitalPhone) {
+      const phoneNumber = `tel:${hospitalPhone}`;
+      Linking.openURL(phoneNumber);
+    }
+  };
+
   return (
     <View style={styles.subCatContainer}>
       <View style={styles.catBox}>
         <View style={styles.leftbox}>
-          <Image
-            source={require('../assets/Lanka_Hospitals_logo.png')}
-            style={styles.hosLogo}
-          />
+          <Image source={{uri: logo}} style={styles.hosLogo} />
         </View>
         <View style={styles.middlebox}>
           <View style={styles.boxhead}>
@@ -37,14 +47,21 @@ const DirectionCard: React.FC<DirectionCardProps> = ({
             <BookmarkIcon size={20} color="#0057e7" />
           </View>
           <View style={styles.boxmiddle}>
-            <Text>Hospital</Text>
+            <View style={styles.subText}>
+              <Text>{type}</Text>
+              {isOpenNow ? (
+                <Text style={{color: 'green', marginRight: 150}}>Open Now</Text>
+              ) : (
+                <Text style={{color: 'red', marginRight: 170}}>Closed</Text>
+              )}
+            </View>
             <Text>{address} </Text>
           </View>
           <View style={styles.boxbottom}>
-            <View style={styles.buttomOne}>
+            <TouchableOpacity style={styles.buttomOne} onPress={callHospital}>
               <PhoneIcon size={20} color="#0057e7" />
               <Text style={styles.buttontext}>Call</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.buttomTwo}>
               <MapPinIcon size={20} color="#fff" />
               <Text style={{color: '#fff'}}>Direction</Text>
@@ -74,13 +91,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   hosLogo: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
   },
   leftbox: {
     width: '20%',
     height: 155,
-    padding: 10,
+    padding: 20,
   },
   middlebox: {
     width: '80%',
@@ -134,6 +151,11 @@ const styles = StyleSheet.create({
   },
   buttontext: {
     color: '#0057e7',
+  },
+  subText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import React, {useCallback, useState} from 'react';
 import {
   View,
   TextInput,
@@ -6,13 +7,13 @@ import {
   FlatList,
   TouchableOpacity,
   Text,
-  Linking,
 } from 'react-native';
-import React, {useCallback, useState} from 'react';
 import {MicrophoneIcon} from 'react-native-heroicons/solid';
 import {MagnifyingGlassIcon} from 'react-native-heroicons/outline';
+import {useNavigation} from '@react-navigation/native';
 
 const SearchBox = () => {
+  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
@@ -36,11 +37,44 @@ const SearchBox = () => {
     fetchSuggestions(searchQuery);
   }, [fetchSuggestions, searchQuery]);
 
-  const handleSuggestionPress = (suggestion: never) => {
+  // const handleSuggestionPress = (suggestion: any) => {
+  //   console.log('Selected suggestion:', suggestion);
+  //   if (suggestion.place_id) {
+  //     // Navigate to the MapScreen and pass the place_id as a parameter
+  //     navigation.navigate('MapScreen', {placeId: suggestion.place_id});
+  //   }
+  // };
+
+  const handleSuggestionPress = async (suggestion: any) => {
     console.log('Selected suggestion:', suggestion);
+
     if (suggestion.place_id) {
-      const googleMapsUrl = `https://www.google.com/maps/place/?q=place_id:${suggestion.place_id}`;
-      Linking.openURL(googleMapsUrl);
+      try {
+        const apiKey = 'AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8';
+        const placeDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${suggestion.place_id}&fields=name,geometry,vicinity&key=${apiKey}`;
+
+        const response = await fetch(placeDetailsUrl);
+        const data = await response.json();
+
+        if (data.result) {
+          const selectedLocation: MarkerData = {
+            latitude: data.result.geometry.location.lat,
+            longitude: data.result.geometry.location.lng,
+            title: data.result.name,
+            description: data.result.vicinity,
+            identifier: suggestion.place_id,
+            pinColor: '#0057e7',
+          };
+
+          // Navigate to the MapScreen and pass the selected location
+          navigation.navigate('MapScreen', {location: selectedLocation});
+          // console.log('Selected location:', selectedLocation);
+        } else {
+          console.error('Failed to fetch place details:', data.status);
+        }
+      } catch (error) {
+        console.error('Error fetching place details:', error);
+      }
     }
   };
 
@@ -62,7 +96,7 @@ const SearchBox = () => {
             value={searchQuery}
             onChangeText={text => {
               setSearchQuery(text);
-              fetchSuggestions(text); // Fetch suggestions as the user types
+              fetchSuggestions(text);
             }}
             onSubmitEditing={handleSearch}
           />

@@ -2,18 +2,20 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
 import React from 'react';
 
-const CardList = () => {
+interface DirectionCardProps {
+  name: string;
+  logo: string;
+}
+
+const CardList: React.FC<DirectionCardProps> = ({name, logo}) => {
   return (
     <View style={styles.box}>
       <View style={styles.subBox}>
         <View style={styles.leftBox}>
-          <Image
-            source={require('../assets/Lanka_Hospitals_logo.png')}
-            style={styles.hosLogo}
-          />
+          <Image source={{uri: logo}} style={styles.hosLogo} />
         </View>
         <View style={styles.rightBox}>
-          <Text style={styles.heraderText}>Lanka Hospital</Text>
+          <Text style={styles.heraderText}>{name}</Text>
         </View>
       </View>
     </View>
@@ -22,7 +24,7 @@ const CardList = () => {
 
 const styles = StyleSheet.create({
   heraderText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
   },
@@ -49,8 +51,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   hosLogo: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
   },
   rightBox: {
     width: '50%',
