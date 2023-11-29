@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 import {MicrophoneIcon} from 'react-native-heroicons/solid';
-import {MagnifyingGlassIcon, XIcon} from 'react-native-heroicons/outline';
+import {MagnifyingGlassIcon, XCircleIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 
 const SearchBox = () => {
@@ -111,7 +111,7 @@ const SearchBox = () => {
           <TouchableOpacity
             style={styles.searchBoxThree}
             onPress={handleDelete}>
-            <XIcon size={20} color="#747474" />
+            <XCircleIcon size={20} color="#747474" />
           </TouchableOpacity>
         )}
         <View style={styles.searchBoxThree}>
