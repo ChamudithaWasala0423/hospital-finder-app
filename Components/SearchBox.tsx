@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 import {MicrophoneIcon} from 'react-native-heroicons/solid';
-import {MagnifyingGlassIcon} from 'react-native-heroicons/outline';
+import {MagnifyingGlassIcon, XIcon} from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
 
 const SearchBox = () => {
@@ -78,6 +78,12 @@ const SearchBox = () => {
     }
   };
 
+  const handleDelete = () => {
+    // Clear the search query when the delete (cross) icon is pressed
+    setSearchQuery('');
+    setSuggestions([]); // Optionally, you can clear suggestions as well
+  };
+
   return (
     <View style={styles.subHeaderContainer}>
       <View style={styles.searchBoxContainer}>
@@ -101,6 +107,13 @@ const SearchBox = () => {
             onSubmitEditing={handleSearch}
           />
         </View>
+        {searchQuery.length > 0 && (
+          <TouchableOpacity
+            style={styles.searchBoxThree}
+            onPress={handleDelete}>
+            <XIcon size={20} color="#747474" />
+          </TouchableOpacity>
+        )}
         <View style={styles.searchBoxThree}>
           <MicrophoneIcon size={20} color="#0057e7" />
         </View>

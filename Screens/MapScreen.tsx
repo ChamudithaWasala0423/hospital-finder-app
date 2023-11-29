@@ -31,6 +31,8 @@ const MapScreen: React.FC = () => {
   const mapRef = useRef<MapView>(null);
   const route = useRoute();
   const [searchLocation, setSearchLocation] = useState<MarkerData | null>(null);
+  const [isGettingCurrentLocation, setIsGettingCurrentLocation] =
+    useState<boolean>(false);
 
   useEffect(() => {
     requestLocationPermission();
@@ -49,18 +51,19 @@ const MapScreen: React.FC = () => {
     if (route.params && route.params.location) {
       // Handle the passed location data here
       const selectedLocation = route.params.location;
+      // console.log('Selected location from params:', selectedLocation);
 
       const searchLocationMarker: MarkerData = {
-        latitude: selectedLocation.coords.latitude,
-        longitude: selectedLocation.coords.longitude,
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
         title: selectedLocation.main_text,
         description: selectedLocation.secondary_text,
         identifier: 'myLocation',
-        pinColor: 'green',
+        pinColor: 'red',
       };
 
       setSearchLocation(searchLocationMarker);
-      // You might want to animate to the new user location
+
       mapRef.current?.animateToRegion({
         latitude: selectedLocation.latitude,
         longitude: selectedLocation.longitude,
@@ -105,16 +108,18 @@ const MapScreen: React.FC = () => {
           title: 'My Location',
           description: 'This is my current location',
           identifier: 'myLocation',
-          pinColor: '#FF5733',
+          pinColor: 'red',
         };
         setUserLocation(userLocationMarker);
         // Animate to the user's current location
-        mapRef.current?.animateToRegion({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
-        });
+
+        // mapRef.current?.animateToRegion({
+        //   latitude: position.coords.latitude,
+        //   longitude: position.coords.longitude,
+        //   latitudeDelta: 0.02,
+        //   longitudeDelta: 0.02,
+        // });
+
         getNearbyHospitals(position.coords.latitude, position.coords.longitude);
       },
       error => {
@@ -146,6 +151,16 @@ const MapScreen: React.FC = () => {
       console.error('Error fetching nearby hospitals:', error);
     }
   };
+
+  useEffect(() => {
+    if (isGettingCurrentLocation) {
+      // Handle logic for the "Get Current Location" button
+      // This will be triggered when the button is pressed
+      // You can customize this logic as needed
+
+      setIsGettingCurrentLocation(false); // Reset the flag after handling the action
+    }
+  }, [isGettingCurrentLocation]);
 
   return (
     <View style={styles.container}>
@@ -202,11 +217,11 @@ const MapScreen: React.FC = () => {
         ))}
       </MapView>
       <View style={styles.bottomButton}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.bottomSub}
           onPress={() => getLoaction()}>
           <Text style={styles.bottomText}>Get Current Location</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.bottomSub}
           onPress={() => navigation.navigate('Direction')}>
@@ -252,7 +267,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     marginTop: -140,
-    flexDirection: 'row',
   },
   bottomSub: {
     height: 50,
