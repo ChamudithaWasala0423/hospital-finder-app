@@ -8,6 +8,7 @@ import {
   ShareIcon,
 } from 'react-native-heroicons/solid';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 interface DirectionCardProps {
   name: string;
@@ -16,6 +17,8 @@ interface DirectionCardProps {
   logo: string;
   type: string[];
   openingHours: string;
+  latitude: number;
+  longitude: number;
 }
 
 const DirectionCard: React.FC<DirectionCardProps> = ({
@@ -25,14 +28,21 @@ const DirectionCard: React.FC<DirectionCardProps> = ({
   hospitalPhone,
   logo,
   openingHours,
+  latitude,
+  longitude,
 }) => {
   const isOpenNow = openingHours;
+  const navigation = useNavigation();
 
   const callHospital = () => {
     if (hospitalPhone) {
       const phoneNumber = `tel:${hospitalPhone}`;
       Linking.openURL(phoneNumber);
     }
+  };
+
+  const getDirectionsToHospital = () => {
+    navigation.navigate('MapScreen', {location: {latitude, longitude}});
   };
 
   return (
@@ -62,14 +72,16 @@ const DirectionCard: React.FC<DirectionCardProps> = ({
               <PhoneIcon size={20} color="#0057e7" />
               <Text style={styles.buttontext}>Call</Text>
             </TouchableOpacity>
-            <View style={styles.buttomTwo}>
+            <TouchableOpacity
+              style={styles.buttomTwo}
+              onPress={getDirectionsToHospital}>
               <MapPinIcon size={20} color="#fff" />
               <Text style={{color: '#fff'}}>Direction</Text>
-            </View>
-            <View style={styles.buttomOne}>
+            </TouchableOpacity>
+            {/* <View style={styles.buttomOne}>
               <ShareIcon size={20} color="#0057e7" />
               <Text style={styles.buttontext}>Share</Text>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
@@ -124,7 +136,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 55,
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   buttomOne: {
     height: 40,

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
 } from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker, Polyline} from 'react-native-maps';
 import {ListBulletIcon} from 'react-native-heroicons/solid';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
@@ -33,19 +33,13 @@ const MapScreen: React.FC = () => {
   const [searchLocation, setSearchLocation] = useState<MarkerData | null>(null);
   const [isGettingCurrentLocation, setIsGettingCurrentLocation] =
     useState<boolean>(false);
+  const [polylineCoordinates, setPolylineCoordinates] = useState<MarkerData[]>(
+    [],
+  );
 
   useEffect(() => {
     requestLocationPermission();
   }, []);
-
-  // useEffect(() => {
-  //   if (route.params && route.params.location) {
-  //     // Handle the passed location data here
-  //     const selectedLocation = route.params.location;
-  //     // Do something with the selected location data if needed
-  //     console.log('Selected location from params:', selectedLocation);
-  //   }
-  // }, [route.params]);
 
   useEffect(() => {
     if (route.params && route.params.location) {
@@ -70,6 +64,7 @@ const MapScreen: React.FC = () => {
         latitudeDelta: 0.02,
         longitudeDelta: 0.02,
       });
+      getDirections(selectedLocation.latitude, selectedLocation.longitude);
     }
   }, [route.params]);
 
@@ -111,15 +106,6 @@ const MapScreen: React.FC = () => {
           pinColor: 'red',
         };
         setUserLocation(userLocationMarker);
-        // Animate to the user's current location
-
-        // mapRef.current?.animateToRegion({
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        //   latitudeDelta: 0.02,
-        //   longitudeDelta: 0.02,
-        // });
-
         getNearbyHospitals(position.coords.latitude, position.coords.longitude);
       },
       error => {
@@ -152,12 +138,33 @@ const MapScreen: React.FC = () => {
     }
   };
 
+  const getDirections = async (
+    destinationLatitude: number,
+    destinationLongitude: number,
+  ) => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${userLocation?.latitude},${userLocation?.longitude}&destination=${destinationLatitude},${destinationLongitude}&key=AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8`,
+      );
+      const steps = response.data.routes[0].legs[0].steps;
+
+      const coordinates: MarkerData[] = steps.map((step: any) => ({
+        latitude: step.end_location.lat,
+        longitude: step.end_location.lng,
+        title: step.html_instructions,
+        description: '',
+        identifier: 'direction',
+        pinColor: '#ff0000',
+      }));
+
+      setPolylineCoordinates(coordinates);
+    } catch (error) {
+      console.error('Error fetching directions:', error);
+    }
+  };
+
   useEffect(() => {
     if (isGettingCurrentLocation) {
-      // Handle logic for the "Get Current Location" button
-      // This will be triggered when the button is pressed
-      // You can customize this logic as needed
-
       setIsGettingCurrentLocation(false); // Reset the flag after handling the action
     }
   }, [isGettingCurrentLocation]);
@@ -215,6 +222,14 @@ const MapScreen: React.FC = () => {
             pinColor={marker.pinColor}
           />
         ))}
+
+        {polylineCoordinates.length > 0 && (
+          <Polyline
+            coordinates={polylineCoordinates}
+            strokeWidth={5}
+            strokeColor="black"
+          />
+        )}
       </MapView>
       <View style={styles.bottomButton}>
         {/* <TouchableOpacity

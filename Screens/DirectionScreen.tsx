@@ -1,6 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {AdjustmentsVerticalIcon} from 'react-native-heroicons/outline';
 import SearchNow from '../Components/SearchNow';
 import DirectionCard from '../Components/DirectionCard';
@@ -8,6 +15,7 @@ import Geolocation from '@react-native-community/geolocation';
 
 const DirectionScreen = () => {
   const [hospitalData, setHospitalData] = useState<any>({results: []});
+  const [isOpenNow, setIsOpenNow] = useState<boolean>(false);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -55,30 +63,29 @@ const DirectionScreen = () => {
           <View style={styles.box}>
             <AdjustmentsVerticalIcon size={25} color="#0057e7" />
           </View>
-          <View style={styles.boxOne}>
-            <Text style={styles.boxText}>Near by you</Text>
-          </View>
-          <View style={styles.boxOne}>
-            <Text style={styles.boxText}>Open Now</Text>
-          </View>
+          <TouchableOpacity
+            style={[
+              styles.boxOne,
+              isOpenNow && {backgroundColor: '#0057e7', borderColor: '#0057e7'},
+            ]}
+            onPress={() => setIsOpenNow(!isOpenNow)}>
+            <Text style={[styles.boxText, isOpenNow && {color: 'white'}]}>
+              Open Now
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View>
         <Text style={styles.headerText}>Results</Text>
       </View>
       <ScrollView>
-        {hospitalData.results.map(
-          (
-            hospital: {
-              name: string;
-              vicinity: string;
-              types: string[][];
-              phone: string;
-              opening_hours: string;
-              icon: string;
-            },
-            index: React.Key | null | undefined,
-          ) => (
+        {hospitalData.results
+          .filter(
+            (hospital: any) =>
+              hospital.types[0].includes('hospital') &&
+              (isOpenNow ? hospital.opening_hours?.open_now : true),
+          )
+          .map((hospital: any, index: React.Key | null | undefined) => (
             <DirectionCard
               key={index}
               name={hospital.name}
@@ -87,9 +94,10 @@ const DirectionScreen = () => {
               hospitalPhone={hospital.phone}
               openingHours={hospital.opening_hours}
               logo={hospital.icon}
+              latitude={hospital.geometry.location.lat}
+              longitude={hospital.geometry.location.lng}
             />
-          ),
-        )}
+          ))}
       </ScrollView>
     </SafeAreaView>
   );
