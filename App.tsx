@@ -10,9 +10,7 @@ import HospitalListScreen from './Screens/HospitalListScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import MapScreen from './Screens/MapScreen';
 import DirectionScreen from './Screens/DirectionScreen';
-// import {enableLatestRenderer} from 'react-native-maps';
-
-// enableLatestRenderer();
+import FindHopsitalScreen from './Screens/FindHospitalScreen';
 
 function App(): JSX.Element {
   const Stack = createStackNavigator();
@@ -31,13 +29,19 @@ function App(): JSX.Element {
           name="MapScreen"
           component={MapScreen}
           options={{
-            cardStyleInterpolator:
-              CardStyleInterpolators.forModalPresentationIOS,
+            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
           }}
         />
         <Stack.Screen
           name="Direction"
           component={DirectionScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
+          name="FindGospital"
+          component={FindHopsitalScreen}
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}

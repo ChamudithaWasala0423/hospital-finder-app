@@ -14,6 +14,7 @@ import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import SearchBox from '../Components/SearchBox';
 import MenuBar from '../Components/MenuBar';
+import polyline from '@mapbox/polyline';
 
 interface MarkerData {
   latitude: number;
@@ -143,15 +144,21 @@ const MapScreen: React.FC = () => {
     destinationLongitude: number,
   ) => {
     try {
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/directions/json?origin=${userLocation?.latitude},${userLocation?.longitude}&destination=${destinationLatitude},${destinationLongitude}&key=AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8`,
-      );
-      const steps = response.data.routes[0].legs[0].steps;
+      const apiKey = 'AIzaSyBdxo_ZkkvAh8BlbI7W9AZBFoMvZY8Evp8';
+      const origin = `${userLocation?.latitude},${userLocation?.longitude}`;
+      const destination = `${destinationLatitude},${destinationLongitude}`;
 
-      const coordinates: MarkerData[] = steps.map((step: any) => ({
-        latitude: step.end_location.lat,
-        longitude: step.end_location.lng,
-        title: step.html_instructions,
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`,
+      );
+
+      const points = response.data.routes[0].overview_polyline.points;
+      const decodedPoints = polyline.decode(points);
+
+      const coordinates: MarkerData[] = decodedPoints.map(point => ({
+        latitude: point[0],
+        longitude: point[1],
+        title: 'Direction',
         description: '',
         identifier: 'direction',
         pinColor: '#ff0000',
@@ -227,7 +234,7 @@ const MapScreen: React.FC = () => {
           <Polyline
             coordinates={polylineCoordinates}
             strokeWidth={5}
-            strokeColor="black"
+            strokeColor="blue"
           />
         )}
       </MapView>

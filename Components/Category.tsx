@@ -1,11 +1,20 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import DirectionCard from './DirectionCard';
 import Geolocation from '@react-native-community/geolocation';
+import {useNavigation} from '@react-navigation/native';
 
 const Category = () => {
   const [hospitalData, setHospitalData] = useState<any>({results: []});
+  const navigation = useNavigation();
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -52,21 +61,25 @@ const Category = () => {
       </View>
       <View style={styles.subConatiner}>
         <View style={styles.subBox}>
-          <View style={styles.subBoxTwo}>
+          <TouchableOpacity
+            style={styles.subBoxTwo}
+            onPress={() => navigation.navigate('FindGospital')}>
             <Image
               source={require('../assets/10613398_10130-ai.png')}
               style={styles.mainImg}
             />
-          </View>
+          </TouchableOpacity>
           <Text style={styles.subBoxText}>Find your hospitals</Text>
         </View>
         <View style={styles.subBox}>
-          <View style={styles.subBoxTwo}>
+          <TouchableOpacity
+            style={styles.subBoxTwo}
+            onPress={() => navigation.navigate('MapScreen')}>
             <Image
               source={require('../assets/4387754_2328234-ai.png')}
               style={styles.mainImg}
             />
-          </View>
+          </TouchableOpacity>
           <Text style={styles.subBoxText}>Find hospitals</Text>
         </View>
       </View>
