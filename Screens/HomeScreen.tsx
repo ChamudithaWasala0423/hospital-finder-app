@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import React from 'react';
-import MenuBar from '../Components/MenuBar';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native'
+import {useNavigation} from '@react-navigation/native';;
+import React, {useEffect} from 'react';
+import MenuBar from '../components/MenuBar';
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () =>{
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <MenuBar />
