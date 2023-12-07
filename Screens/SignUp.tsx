@@ -152,7 +152,7 @@ const SignUp: React.FC = () => {
           </View>
         </TouchableOpacity> */}
 
-        <TouchableOpacity style={styles.touchableContainer} onPress={() => navigation.navigate('SettingScreen')}>
+        <TouchableOpacity style={styles.touchableContainer} onPress={() => navigation.navigate('EditProfileScreen')}>
           <View style={styles.imagecontainer}>
             <Image source={require('../assets/phone_icon.png')} style={styles.image} />
             <Text style={styles.signtext}>Continue with Phone</Text>
