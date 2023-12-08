@@ -2,7 +2,7 @@
 import {View, Text, StyleSheet, SafeAreaView, Button } from 'react-native'
 import {useNavigation} from '@react-navigation/native';;
 import React, {useEffect} from 'react';
-import MenuBar from '../Components/MenuBar';
+import MenuBar from '../components/MenuBar';
 
 const HomeScreen: React.FC = () =>{
   const navigation = useNavigation();

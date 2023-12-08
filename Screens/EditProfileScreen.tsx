@@ -16,9 +16,9 @@ import {
   HomeIcon,
   CakeIcon,
 } from 'react-native-heroicons/outline';
-import MenuBar from '../Components/MenuBar';
-import CardComponent from '../Components/CardComponent';
-import ButtonComponent from '../Components/ButtonComponent';
+import MenuBar from '../components/MenuBar';
+import CardComponent from '../components/CardComponent';
+import ButtonComponent from '../components/ButtonComponent';
 import { getFirestore, collection, getDocs, addDoc, doc, query, where, updateDoc  } from '@firebase/firestore';
 
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';

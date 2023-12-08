@@ -11,9 +11,9 @@ import {
   TextInput,
   Button,AppRegistry
 } from 'react-native';
-import Inputs from '../Components/inputs';
-import ButtonComponent from '../Components/ButtonComponent';
-import CardComponent from '../Components/CardComponent';
+import Inputs from '../components/inputs';
+import ButtonComponent from '../components/ButtonComponent';
+import CardComponent from '../components/CardComponent';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { EyeIcon } from 'react-native-heroicons/outline'; // Corrected import
