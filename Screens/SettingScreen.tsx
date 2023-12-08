@@ -1,9 +1,9 @@
 // SettingScreen.tsx
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, } from 'react-native';
-import MenuBar from '../components/MenuBar';
-import CardComponent from '../components/CardComponent';
-import ButtonComponent from '../components/ButtonComponent';
+import MenuBar from '../Components/MenuBar';
+import CardComponent from '../Components/CardComponent';
+import ButtonComponent from '../Components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 // Import your local image
@@ -70,7 +70,10 @@ const SettingScreen = () => {
       <CardComponent color="white" width="90%" height="58%" marginTop={0} marginBottom={20} alignItems="flex-start" justifyContent="flex-start">
         {/* New section */}
         <Text style={styles.sectionTitle}>Accounts</Text>
-        <Text style={styles.sectionItem}>personal information</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('ChangePassword')}>
+          <Text style={styles.sectionItem}>Security</Text>
+        </TouchableOpacity>
+      
         <Text style={styles.sectionItem}>country</Text>
         <Text style={styles.sectionItem}>language</Text>
         <View style={styles.horizontalLine} />

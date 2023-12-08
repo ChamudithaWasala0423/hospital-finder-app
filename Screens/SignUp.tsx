@@ -11,14 +11,15 @@ import {
   TextInput,
   Button,AppRegistry
 } from 'react-native';
-import Inputs from '../components/inputs';
-import ButtonComponent from '../components/ButtonComponent';
-import CardComponent from '../components/CardComponent';
+import Inputs from '../Components/inputs';
+import ButtonComponent from '../Components/ButtonComponent';
+import CardComponent from '../Components/CardComponent';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { EyeIcon } from 'react-native-heroicons/outline'; // Corrected import
 import { getFirestore, collection, getDocs, addDoc,  query, where,  } from '@firebase/firestore';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
 
@@ -82,7 +83,14 @@ const SignUp: React.FC = () => {
   const handleSignUp1 = async () => {
     try {
       // Create a new user with email and password
-      await auth().createUserWithEmailAndPassword(email, pass);
+      const userCredential = await auth().createUserWithEmailAndPassword(email, pass);
+      // Extract UID from the userCredential
+      const userUid = userCredential.user.uid;
+
+      // Save the UID to AsyncStorage
+      await AsyncStorage.setItem('UID', userUid);
+      const userUidread = await AsyncStorage.getItem('UID');
+      console.log(userUidread)
       // If successful, show a success message
       Alert.alert("Success", "Account created successfully!");
       navigation.navigate('HomeScreen');
@@ -152,7 +160,7 @@ const SignUp: React.FC = () => {
           </View>
         </TouchableOpacity> */}
 
-        <TouchableOpacity style={styles.touchableContainer} onPress={() => navigation.navigate('EditProfileScreen')}>
+        <TouchableOpacity style={styles.touchableContainer} onPress={() => navigation.navigate('PhoneVerification')}>
           <View style={styles.imagecontainer}>
             <Image source={require('../assets/phone_icon.png')} style={styles.image} />
             <Text style={styles.signtext}>Continue with Phone</Text>

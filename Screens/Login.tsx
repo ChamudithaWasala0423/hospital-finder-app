@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { View, Alert,  Text, StyleSheet,Image,SafeAreaView,TouchableOpacity,TextInput,  ImageBackground,} from 'react-native';
 import Inputs from '../components/inputs';
-import ButtonComponent from '../components/ButtonComponent';
-import CardComponent from '../components/CardComponent';
+import ButtonComponent from '../Components/ButtonComponent';
+import CardComponent from '../Components/CardComponent';
 import {useNavigation} from '@react-navigation/native'; 
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { firebase } from '@react-native-firebase/auth';
 import { getFirestore, collection, getDocs, addDoc,  query, where,  } from '@firebase/firestore';
 import { EyeIcon } from 'react-native-heroicons/outline'; // Corrected import
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 
@@ -27,10 +29,17 @@ const Login: React.FC = () => {
   const handleLoginPress = async () => {
     try {
       // Sign in user with email and password
-      await auth().signInWithEmailAndPassword(email, pass);
+      const userCredential= await auth().signInWithEmailAndPassword(email, pass);
+      // Extract UID from the userCredential
+      const userUid = userCredential.user.uid;
 
+      // Save the UID to AsyncStorage
+      await AsyncStorage.setItem('UID', userUid);
+      const userUidread = await AsyncStorage.getItem('UID');
+      console.log(userUidread)
       // If successful, show a success message or navigate to the next screen
       Alert.alert('Success', 'Login successful!');
+
       navigation.navigate('HomeScreen');
     } catch (error: any) {
       // If there's an error, show an error message
@@ -39,6 +48,8 @@ const Login: React.FC = () => {
 
   
 };
+
+
 
     return (
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>

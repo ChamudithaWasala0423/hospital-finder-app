@@ -15,6 +15,8 @@ import PhoneVerification from './Screens/PhoneVerification';
 import EditProfileScreen from './Screens/EditProfileScreen';
 import ViewProfileScreen from './Screens/ViewProfileScreen';
 import SettingScreen from './Screens/SettingScreen';
+import PhoneAuth from './Screens/PhoneAuth';
+import ChangePassword from './Screens/ChangePassword';
 
 import 'firebase/auth'
 import { AppRegistry } from 'react-native';
@@ -86,6 +88,11 @@ const App = () => {
         /><Stack.Screen
           name="PhoneVerification"
           component={PhoneVerification}
+          options={{animation: 'slide_from_right'}}
+        />
+        <Stack.Screen
+          name="ChangePassword"
+          component={ChangePassword}
           options={{animation: 'slide_from_right'}}
         />
         <Stack.Screen
