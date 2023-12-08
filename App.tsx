@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import Country from './pop_upScreen/country';
 
-function App(): JSX.Element {
-  return (
+const App: React.FC = () => {
+  return(
     <View>
-      <Text>Hi Rect Native</Text>
+      <Country></Country>
     </View>
   );
-}
-
+};
 export default App;
