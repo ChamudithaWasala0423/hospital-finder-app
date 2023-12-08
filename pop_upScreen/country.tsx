@@ -18,6 +18,10 @@ const Country: React.FC<CountryModalProps> = ({ visible, onClose }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.countryText}>Country</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>Sri Lanka</Text>
+          </View>
+        
           <TouchableOpacity  style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closetext}>Close</Text>
           </TouchableOpacity>
@@ -59,6 +63,19 @@ const styles = StyleSheet.create({
     closetext:{
         fontSize:15,
         color:'#000000'
-    }
+    },
+    titleContainer: {
+        backgroundColor: '#e0e0e0',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+        marginTop:30,
+        //borderColor:'#000000',
+        //borderWidth:2
+      },
+      titleText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
   });
 export default Country;
