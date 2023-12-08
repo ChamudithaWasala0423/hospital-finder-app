@@ -1,9 +1,9 @@
 // SettingScreen.tsx
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, } from 'react-native';
-import MenuBar from '../Components/MenuBar';
-import CardComponent from '../Components/CardComponent';
-import ButtonComponent from '../Components/ButtonComponent';
+import MenuBar from '../components/MenuBar';
+import CardComponent from '../components/CardComponent';
+import ButtonComponent from '../components/ButtonComponent';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 // Import your local image

@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet,Image,SafeAreaView,TouchableOpacity,  ImageBackground,} from 'react-native';
-import Inputs from '../Components/inputs';
-import ButtonComponent from '../Components/ButtonComponent';
-import CardComponent from '../Components/CardComponent';
+import Inputs from '../components/inputs';
+import ButtonComponent from '../components/ButtonComponent';
+import CardComponent from '../components/CardComponent';
 
 const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
 

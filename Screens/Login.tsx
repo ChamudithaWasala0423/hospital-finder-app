@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Alert,  Text, StyleSheet,Image,SafeAreaView,TouchableOpacity,TextInput,  ImageBackground,} from 'react-native';
 import Inputs from '../components/inputs';
-import ButtonComponent from '../Components/ButtonComponent';
-import CardComponent from '../Components/CardComponent';
+import ButtonComponent from '../components/ButtonComponent';
+import CardComponent from '../components/CardComponent';
 import {useNavigation} from '@react-navigation/native'; 
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { firebase } from '@react-native-firebase/auth';

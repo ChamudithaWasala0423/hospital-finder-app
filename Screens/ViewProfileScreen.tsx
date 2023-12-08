@@ -12,9 +12,9 @@ import {
 
 } from 'react-native-heroicons/outline';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MenuBar from '../Components/MenuBar';
-import CardComponent from '../Components/CardComponent';
-import ButtonComponent from '../Components/ButtonComponent';
+import MenuBar from '../components/MenuBar';
+import CardComponent from '../components/CardComponent';
+import ButtonComponent from '../components/ButtonComponent';
 
 // Import your local assets
 const profileImage = require('../assets/profile.png');
