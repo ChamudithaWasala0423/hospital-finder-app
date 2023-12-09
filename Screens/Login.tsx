@@ -17,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {EyeIcon} from 'react-native-heroicons/outline'; // Corrected import
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {EyeSlashIcon, PhoneIcon} from 'react-native-heroicons/solid';
 
 const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
 
@@ -76,9 +77,37 @@ const Login: React.FC = () => {
           value={pass}
           onChangeText={text => setPassword(text)}
         />
+        <TouchableOpacity onPress={handleTogglePassword} style={styles.eyeIcon}>
+          {showPassword ? (
+            <EyeIcon size={24} color="gray" /> // Use your EyeOpenIcon component
+          ) : (
+            <EyeSlashIcon size={24} color="gray" /> // Use your EyeClosedIcon component
+          )}
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.mainButton} onPress={handleLoginPress}>
           <Text style={styles.signinButton}>Sign in</Text>
+        </TouchableOpacity>
+        <Text style={styles.subText}>
+          Dont have an account?
+          <Text
+            style={styles.subTextup}
+            onPress={() => navigation.navigate('SignUp')}>
+            Sign up
+          </Text>
+        </Text>
+        <View style={styles.lineback}>
+          <View style={styles.line} />
+          <Text style={{color: 'gray', margin: 10}}>or</Text>
+          <View style={styles.line} />
+        </View>
+      </View>
+      <View style={styles.subButtonBack}>
+        <TouchableOpacity
+          style={styles.mainButtonTwo}
+          onPress={() => navigation.navigate('PhoneVerification')}>
+          <PhoneIcon size={20} color={'black'} />
+          <Text style={styles.signinButtonTwo}>Continue with Phone</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -109,9 +138,10 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     width: '100%',
-    height: 350,
+    height: 320,
     // backgroundColor: 'blue',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   input: {
     height: '15%',
@@ -136,6 +166,58 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'white',
     fontWeight: 'bold',
+  },
+  subText: {
+    fontSize: 15,
+    color: 'gray',
+    marginTop: 10,
+  },
+  subTextup: {
+    fontSize: 15,
+    color: '#0057e7',
+    marginTop: 10,
+    fontWeight: 'bold',
+  },
+  lineback: {
+    width: '85%',
+    height: 40,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  line: {
+    width: '40%',
+    height: 1,
+    backgroundColor: 'gray',
+  },
+  subButtonBack: {
+    width: '100%',
+    height: 300,
+    alignItems: 'center',
+  },
+  mainButtonTwo: {
+    width: '85%',
+    height: '15%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  signinButtonTwo: {
+    fontSize: 15,
+    color: '#000',
+    fontWeight: 'bold',
+    marginLeft: 30,
+  },
+  eyeIcon: {
+    position: 'absolute',
+    right: 10,
+    top: '25%',
+    marginRight: 40,
+    marginTop: 22,
   },
 });
 export default Login;

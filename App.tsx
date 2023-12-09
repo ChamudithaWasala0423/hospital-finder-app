@@ -38,6 +38,7 @@ GoogleSignin.configure({
 AppRegistry.registerComponent(appName, () => App);
 
 import {initializeApp} from 'firebase/app';
+import AddProfileData from './Screens/AddProfileData';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAIMt3eNhwh7fRl32lfd7KAhOeKA89aiyk',
@@ -97,7 +98,7 @@ function App(): JSX.Element {
           name="Login"
           component={Login}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}
         />
         <Stack.Screen
@@ -142,6 +143,13 @@ function App(): JSX.Element {
           component={SettingScreen}
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+          }}
+        />
+        <Stack.Screen
+          name="AddProfileData"
+          component={AddProfileData}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}
         />
       </Stack.Navigator>

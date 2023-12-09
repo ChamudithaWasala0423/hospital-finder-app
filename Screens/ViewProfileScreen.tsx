@@ -94,7 +94,7 @@ const ViewProfileScreen = () => {
 
           {/* Username and Tag */}
           <View style={styles.userdetailsContainer}>
-            <Text style={styles.tags}>Username</Text>
+            <Text style={styles.tags}>Name</Text>
             <Text style={styles.sectionItemBold}>{username}</Text>
           </View>
         </View>

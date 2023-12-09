@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import Inputs from '../Components/inputs';
 import ButtonComponent from '../Components/ButtonComponent';
 import CardComponent from '../Components/CardComponent';
-
-const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
 
 const PhoneVerification: React.FC = () => {
   const handleLoginPress = () => {
@@ -13,39 +11,34 @@ const PhoneVerification: React.FC = () => {
     console.log('Log in button pressed');
   };
   return (
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <Image
-          source={require('../assets/icon.png')}
-          style={styles.imageMain}
-        />
-        <View style={styles.textContainer}>
-          <Text style={styles.text}> Phone Verification</Text>
-        </View>
-
-        <CardComponent
-          color="white"
-          width="80%"
-          height="30%"
-          marginTop={40}
-          marginBottom={20}
-          alignItems="center"
-          justifyContent="center">
-          <Inputs inputName="Phone No" />
-          <Inputs inputName="OTP" />
-        </CardComponent>
-
-        <ButtonComponent
-          backgroundColor="#0057E7"
-          borderRadius={30}
-          marginHorizontal={5}
-          fontColor="white"
-          borderColor="white"
-          onPress={() => console.log('Edit Profile Pressed')}
-          buttonText="Continue"
-        />
+    <View style={styles.container}>
+      <Image source={require('../assets/icon.png')} style={styles.imageMain} />
+      <View style={styles.textContainer}>
+        <Text style={styles.text}> Phone Verification</Text>
       </View>
-    </ImageBackground>
+
+      <CardComponent
+        color="white"
+        width="80%"
+        height="30%"
+        marginTop={40}
+        marginBottom={20}
+        alignItems="center"
+        justifyContent="center">
+        <Inputs inputName="Phone No" />
+        <Inputs inputName="OTP" />
+      </CardComponent>
+
+      <ButtonComponent
+        backgroundColor="#0057E7"
+        borderRadius={30}
+        marginHorizontal={5}
+        fontColor="white"
+        borderColor="white"
+        onPress={() => console.log('Edit Profile Pressed')}
+        buttonText="Continue"
+      />
+    </View>
   );
 };
 

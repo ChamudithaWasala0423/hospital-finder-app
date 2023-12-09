@@ -162,7 +162,7 @@ const EditProfileScreen = () => {
           <View style={styles.userInfoContainer}>
             <UserCircleIcon size={30} color="#0057e7" />
             <View style={styles.userdetailsContainer}>
-              <Text style={styles.tags}>Username</Text>
+              <Text style={styles.tags}>Name</Text>
               <View style={styles.textBack}>
                 <TextInput
                   style={styles.sectionItemBold}
