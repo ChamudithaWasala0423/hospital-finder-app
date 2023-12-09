@@ -1,16 +1,31 @@
-// SettingScreen.tsx
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity, } from 'react-native';
-import MenuBar from '../components/MenuBar';
-import CardComponent from '../components/CardComponent';
-import ButtonComponent from '../components/ButtonComponent';
-import { useNavigation } from '@react-navigation/native';
+/* eslint-disable prettier/prettier */
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
+import MenuBar from '../Components/MenuBar';
+import CardComponent from '../Components/CardComponent';
+import ButtonComponent from '../Components/ButtonComponent';
+import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-// Import your local image
-const profileImage = require('../assets/profile.png');
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from '@firebase/firestore';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SettingScreen = () => {
   const navigation = useNavigation();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleLogout = async () => {
     try {
@@ -23,63 +38,103 @@ const SettingScreen = () => {
     }
   };
 
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const fetchUserDetails = async () => {
+    const firestore = getFirestore();
+
+    try {
+      const userUid = await AsyncStorage.getItem('UID');
+      console.log(userUid, 'test');
+      if (userUid) {
+        const userDetailsCollection = collection(firestore, 'userDetails');
+        const q = query(userDetailsCollection, where('UID', '==', userUid));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.size > 0) {
+          const userData = querySnapshot.docs[0].data();
+          setUsername(userData.name || 'Add name');
+          setEmail(userData.email || 'Add email');
+        } else {
+          console.log(`No documents found with the specified UID.`);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
+
+  const firstLetter = username.charAt(0);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Settings</Text>
 
-      <CardComponent color="white" width="90%" height="20%" marginTop={40} marginBottom={10} alignItems="center" justifyContent="center">
-        {/* Custom content for the first card */}
+      <CardComponent
+        color="white"
+        width="90%"
+        height="20%"
+        marginTop={40}
+        marginBottom={10}
+        alignItems="center"
+        justifyContent="center">
         <View style={styles.cardContent}>
           <View style={styles.profilePictureContainer}>
-            <Image
-              source={profileImage}
-              style={styles.profilePicture}
-            />
+            {/* <Image source={profileImage} style={styles.profilePicture} /> */}
+            <View style={styles.profileImg}>
+              <Text style={styles.profileText}>{firstLetter}</Text>
+            </View>
           </View>
           <View style={styles.userInfoContainer}>
-            <Text style={styles.sectionTitle}>JohnDoe</Text>
-            <Text style={styles.sectionItem}>john.doe@example.com</Text>
+            <Text style={styles.sectionTitle}>{username}</Text>
+            <Text style={{marginBottom: 20, marginLeft: 10}}>{email}</Text>
             <View style={styles.buttonContainer}>
               <ButtonComponent
-                backgroundColor="white"
-                borderRadius={30}
+                backgroundColor="#0057e7"
+                borderRadius={10}
                 marginHorizontal={5}
-                fontColor="black"
-                borderColor="black"
+                fontColor="#fff"
+                borderColor="#0057e7"
                 height={40}
                 width={80}
                 onPress={() => navigation.navigate('ViewProfileScreen')}
                 buttonText="View"
               />
               <ButtonComponent
-                backgroundColor="white"
-                borderRadius={30}
+                backgroundColor="#000"
+                borderRadius={10}
                 marginHorizontal={5}
-                fontColor="black"
-                borderColor="black"
+                fontColor="#fff"
+                borderColor="#000"
                 height={40}
                 width={80}
                 onPress={() => navigation.navigate('EditProfileScreen')}
-                buttonText="Edit Profile"
+                buttonText="Edit"
               />
             </View>
           </View>
         </View>
       </CardComponent>
 
-      <CardComponent color="white" width="90%" height="58%" marginTop={0} marginBottom={20} alignItems="flex-start" justifyContent="flex-start">
+      <CardComponent
+        color="white"
+        width="90%"
+        height="58%"
+        marginTop={0}
+        marginBottom={20}
+        alignItems="flex-start"
+        justifyContent="flex-start">
         {/* New section */}
         <Text style={styles.sectionTitle}>Accounts</Text>
         <TouchableOpacity onPress={() => navigation.navigate('ChangePassword')}>
           <Text style={styles.sectionItem}>Security</Text>
         </TouchableOpacity>
-      
+
         <Text style={styles.sectionItem}>country</Text>
-        <Text style={styles.sectionItem}>language</Text>
         <View style={styles.horizontalLine} />
 
         <Text style={styles.sectionTitle}>General</Text>
-        <Text style={styles.sectionItem}>notifications</Text>
         <Text style={styles.sectionItem}>privacy policy</Text>
         <Text style={styles.sectionItem}>terms of use</Text>
         <Text style={styles.sectionItem}>rate us</Text>
@@ -96,16 +151,16 @@ const SettingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f2f4f5',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 20,
+    paddingTop: 40,
     position: 'relative',
   },
   title: {
     position: 'absolute',
     top: 0,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: 'black',
     alignSelf: 'center',
@@ -118,24 +173,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Distribute items evenly along the row
   },
   profilePictureContainer: {
-    borderRadius: 50,
-    overflow: 'hidden',
-  },
-  profilePicture: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#fff',
+    marginRight: 20,
   },
   userInfoContainer: {
     marginLeft: 10,
   },
- 
+
   buttonContainer: {
     flexDirection: 'row',
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
     marginVertical: 5,
@@ -146,10 +194,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginTop: 5,
-
   },
   sectionItem: {
-    fontSize: 20,
+    fontSize: 17,
     color: 'grey',
     marginVertical: 5,
     marginLeft: 10,
@@ -160,8 +207,19 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 30,
   },
-  
+  profileImg: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    backgroundColor: '#0057e7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileText: {
+    fontSize: 30,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
-
 
 export default SettingScreen;
