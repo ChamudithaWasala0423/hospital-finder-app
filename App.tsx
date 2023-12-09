@@ -11,8 +11,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import MapScreen from './Screens/MapScreen';
 import DirectionScreen from './Screens/DirectionScreen';
 import FindHopsitalScreen from './Screens/FindHospitalScreen';
-import {create} from 'react-test-renderer';
-import {ScreenStackHeaderConfig} from 'react-native-screens';
+
 import Splash from './Screens/Splash';
 import Login from './Screens/Login';
 import SignUp from './Screens/SignUp';
@@ -20,7 +19,7 @@ import PhoneVerification from './Screens/PhoneVerification';
 import EditProfileScreen from './Screens/EditProfileScreen';
 import ViewProfileScreen from './Screens/ViewProfileScreen';
 import SettingScreen from './Screens/SettingScreen';
-import PhoneAuth from './Screens/PhoneAuth';
+
 import ChangePassword from './Screens/ChangePassword';
 
 import 'firebase/auth';
@@ -126,14 +125,16 @@ function App(): JSX.Element {
           name="EditProfileScreen"
           component={EditProfileScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forModalPresentationIOS,
           }}
         />
         <Stack.Screen
           name="ViewProfileScreen"
           component={ViewProfileScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forModalPresentationIOS,
           }}
         />
         <Stack.Screen
