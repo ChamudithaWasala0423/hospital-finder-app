@@ -23,7 +23,7 @@ const App: React.FC = () => {
     </View>
   );*/
 
-  const [termsVisible, setTermsVisible] = useState(false);
+  /*const [termsVisible, setTermsVisible] = useState(false);
 
   const handleOpenTerms = () => {
     setTermsVisible(true);
@@ -42,7 +42,7 @@ const App: React.FC = () => {
 
 
   );
-};
+};*/
 /*const [privacyVisible, setPrivacyVisible] = useState(false);
 
   const handleOpenPrivacy = () => {
@@ -61,5 +61,24 @@ const App: React.FC = () => {
     </View>
   );
 };*/
+const [rateVisible, setRateVisible] = useState(false);
+
+  const handleOpenRate= () => {
+    setRateVisible(true);
+  };
+
+  const handleCloseRate = () => {
+    setRateVisible(false);
+  };
+
+  return (
+    <View>
+      <Button title="Rate Us" onPress={handleOpenRate} />
+
+      <Rate visible={rateVisible} onClose={handleCloseRate} />
+    </View>
+  );
+};
+
 
 export default App;
