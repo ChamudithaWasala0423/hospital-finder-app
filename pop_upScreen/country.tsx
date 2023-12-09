@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Modal, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Modal, Text, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
+import { getCountryNames } from './countryService';
 
 interface CountryModalProps {
     visible: boolean;
@@ -7,6 +8,24 @@ interface CountryModalProps {
   }
 
 const Country: React.FC<CountryModalProps> = ({ visible, onClose }) => {
+  const [countryNames, setCountryNames] = useState<string[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchCountryNames();
+  }, []);
+
+  const fetchCountryNames = async () => {
+    try {
+      const names = await getCountryNames();
+      setCountryNames(names);
+    } catch (error) {
+      console.error('Error fetching country names:', error);
+    }
+  };
+  const handleCountrySelect = (country: string) => {
+    setSelectedCountry(country);
+  };
     
     return(
     <Modal
@@ -18,9 +37,23 @@ const Country: React.FC<CountryModalProps> = ({ visible, onClose }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.countryText}>Country</Text>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Sri Lanka</Text>
-          </View>
+          <ScrollView style={styles.countryList}>
+          {countryNames.map((name) => (
+            <TouchableOpacity
+            key={name}
+            style={[
+              styles.countryItem,
+              selectedCountry === name && styles.selectedCountry,
+            ]}
+            onPress={() => handleCountrySelect(name)}
+          >
+            <Text style={styles.countryItemText}>{name}</Text>
+          </TouchableOpacity>
+
+
+            
+          ))}
+          </ScrollView>
         
           <TouchableOpacity  style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closetext}>Close</Text>
@@ -47,7 +80,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       elevation: 5,
       width:"80%",
-      height:"40%",
+      height:"75%",
 
     },
     closeButton: {
@@ -76,6 +109,21 @@ const styles = StyleSheet.create({
       titleText: {
         fontSize: 16,
         fontWeight: 'bold',
+      },
+      countryList: {
+        maxHeight: '70%', // Adjust the max height as needed
+      },
+      countryItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e0e0e0',
+      },
+      countryItemText: {
+        fontSize: 16,
+        color: '#000000',
+      },
+      selectedCountry: {
+        backgroundColor: '#e0e0e0',
       },
   });
 export default Country;
