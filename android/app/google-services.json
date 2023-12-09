@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "783626717400",
+    "project_id": "hospital-finder-b891c",
+    "storage_bucket": "hospital-finder-b891c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783626717400:android:d5bc93d2de6bee9a2b6fad",
+        "android_client_info": {
+          "package_name": "com.HospitalFinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783626717400-mditepebn95p4n24rnh7rn278b5pagba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.HospitalFinder",
+            "certificate_hash": "b19f0e512397571afe45fe40d5bbcea606a0dd77"
+          }
+        },
+        {
+          "client_id": "783626717400-0dfelvklt2pgss487v017utp23eg1ek6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvhLqZpaV8zi9H3f6QmfblimWOUXfFjUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783626717400-0dfelvklt2pgss487v017utp23eg1ek6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
