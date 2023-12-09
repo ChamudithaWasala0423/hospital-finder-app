@@ -9,16 +9,15 @@ import {
 } from 'react-native-heroicons/solid';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
-const MenuBar = () => {
+const MenuBarTwo = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
   const getIconColor = (screenName: string) => {
     return route.name === screenName ? '#00f' : '#747474'; // Use your desired colors
   };
-
   return (
-    <View style={styles.container}>
+    <View style={styles.menuTwo}>
       <View style={styles.subContainer}>
         <TouchableOpacity
           style={styles.icon}
@@ -58,14 +57,11 @@ const MenuBar = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  menuTwo: {
     width: '100%',
-    height: 60,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 0,
+    height: 50,
     backgroundColor: '#f2f4f5',
+    marginBottom: 30,
   },
   subContainer: {
     width: '100%',
@@ -88,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuBar;
+export default MenuBarTwo;

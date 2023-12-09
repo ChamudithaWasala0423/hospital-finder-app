@@ -1,16 +1,22 @@
-//App.tsx
-import React, { useEffect, useState } from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+/* eslint-disable prettier/prettier */
+import React from 'react';
+import 'react-native-gesture-handler';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
+import HomeScreen from './Screens/HomeScreen';
+import HospitalListScreen from './Screens/HospitalListScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import MapScreen from './Screens/MapScreen';
+import DirectionScreen from './Screens/DirectionScreen';
+import FindHopsitalScreen from './Screens/FindHospitalScreen';
 import {create} from 'react-test-renderer';
 import {ScreenStackHeaderConfig} from 'react-native-screens';
-
-
 import Splash from './Screens/Splash';
 import Login from './Screens/Login';
 import SignUp from './Screens/SignUp';
-import HomeScreen from './Screens/HomeScreen';
 import PhoneVerification from './Screens/PhoneVerification';
 import EditProfileScreen from './Screens/EditProfileScreen';
 import ViewProfileScreen from './Screens/ViewProfileScreen';
@@ -34,15 +40,8 @@ GoogleSignin.configure({
 AppRegistry.registerComponent(appName, () => App);
 
 
-
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAIMt3eNhwh7fRl32lfd7KAhOeKA89aiyk",
   authDomain: "hospital-finder-b891c.firebaseapp.com",
@@ -57,26 +56,46 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 
-
-const App = () => {
-  const Stack = createNativeStackNavigator();
-
-
+function App(): JSX.Element {
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-      
-        <Stack.Screen
+      <Stack.Screen
           name="Splash"
           component={Splash}
           options={{animation: 'slide_from_right'}}
         />
-       <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{animation: 'slide_from_right'}}
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="HospitalList"
+          component={HospitalListScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+          }}
         />
-         <Stack.Screen
+        <Stack.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+          }}
+        />
+        <Stack.Screen
+          name="Direction"
+          component={DirectionScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
+          name="FindGospital"
+          component={FindHopsitalScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{animation: 'slide_from_right'}}
@@ -110,10 +129,10 @@ const App = () => {
        component={SettingScreen}
        options={{animation: 'slide_from_right'}}
       />
-        
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
+
 
 export default App;
