@@ -1,141 +1,157 @@
+/* eslint-disable prettier/prettier */
 
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ImageBackground, Image } from 'react-native';
-import { SparklesIcon } from "react-native-heroicons/solid";
+import React, {useEffect, useState} from 'react';
 import {
-  
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
+
+import {
   UserCircleIcon,
   EnvelopeIcon,
   PhoneIcon,
   HomeIcon,
   CakeIcon,
-
+  ArrowSmallLeftIcon,
 } from 'react-native-heroicons/outline';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import MenuBar from '../components/MenuBar';
-import CardComponent from '../components/CardComponent';
-import ButtonComponent from '../components/ButtonComponent';
+import CardComponent from '../Components/CardComponent';
 
-// Import your local assets
-const profileImage = require('../assets/profile.png');
-const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
+import {useNavigation} from '@react-navigation/native';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from '@firebase/firestore';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ViewProfileScreen = () => {
+  const navigation = useNavigation();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [birthday, setBirthday] = useState('');
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const fetchUserDetails = async () => {
+    const firestore = getFirestore();
+
+    try {
+      const userUid = await AsyncStorage.getItem('UID');
+      console.log(userUid, 'test');
+      if (userUid) {
+        const userDetailsCollection = collection(firestore, 'userDetails');
+        const q = query(userDetailsCollection, where('UID', '==', userUid));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.size > 0) {
+          const userData = querySnapshot.docs[0].data();
+          setUsername(userData.name || 'Add name');
+          setEmail(userData.email || 'Add email');
+          setContactNumber(userData.contact || 'Add contact');
+          setAddress(userData.address || 'Add address');
+          setBirthday(userData.birthday || 'Add birthday');
+        } else {
+          console.log(`No documents found with the specified UID.`);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
   return (
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>User Details</Text>
-       
-        <CardComponent color="#5387e0" width="90%" height="30%" marginTop={40} marginBottom={10} alignItems="center" justifyContent="center">
-          {/* Custom content for the first card */}
-          <View style={styles.cardContent}>
-            <View style={styles.profilePictureContainer}>
-              <Image
-                source={profileImage}
-                style={styles.profilePicture}
-              />
-            </View>
-            
-          </View>
-          <View style={styles.buttonContainer}>
-            <ButtonComponent
-              backgroundColor="white"
-              borderRadius={30}
-              marginHorizontal={5}
-              fontColor="black"
-              borderColor="white"
-              onPress={() => navigation.navigate('EditProfileScreen')}
-              buttonText="Edit Profile"
-            />
-          </View>
-        </CardComponent>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.boxOne} onPress={navigation.goBack}>
+          <ArrowSmallLeftIcon size={25} color="#747474" />
+        </TouchableOpacity>
+        <View style={styles.boxTwo}>
+          <Text style={styles.heraderText}>Find Your Hospital</Text>
+        </View>
+      </View>
 
-        <CardComponent color="white" width="90%" height="49%" marginTop={0} marginBottom={20} alignItems="flex-start" justifyContent="flex-start">
-        <View>
-      
-    </View>
+      <CardComponent
+        color="white"
+        width="90%"
+        height="49%"
+        marginTop={20}
+        marginBottom={0}
+        alignItems="flex-start"
+        justifyContent="flex-start">
+        <View></View>
         <View style={styles.userInfoContainer}>
-            {/* User Icon */}
-            <UserCircleIcon width={35} height={35} color="#5387e0" />
+          {/* User Icon */}
+          <UserCircleIcon size={30} color="#0057e7" />
 
-            {/* Username and Tag */}
-            <View style={styles.userdetailsContainer}>
-              <Text style={[styles.tags, { opacity: 0.6 }]}>Username</Text>
-              <Text style={styles.sectionItemBold}>Chanuka Jayasinghe</Text>
-            </View>
+          {/* Username and Tag */}
+          <View style={styles.userdetailsContainer}>
+            <Text style={styles.tags}>Username</Text>
+            <Text style={styles.sectionItemBold}>{username}</Text>
           </View>
-          
-          <View style={styles.userInfoContainer}>
-            {/* User Icon */}
-            <EnvelopeIcon width={35} height={35} color="#5387e0" />
+        </View>
 
-            {/* Username and Tag */}
-            <View style={styles.userdetailsContainer}>
-              <Text style={[styles.tags, { opacity: 0.6 }]}>Email</Text>
-              <Text style={styles.sectionItemBold}>chanuka@email.com</Text>
-            </View>
+        <View style={styles.userInfoContainer}>
+          {/* User Icon */}
+          <EnvelopeIcon size={30} color="#0057e7" />
+
+          {/* Username and Tag */}
+          <View style={styles.userdetailsContainer}>
+            <Text style={styles.tags}>Email</Text>
+            <Text style={styles.sectionItemBold}>{email}</Text>
           </View>
-          <View style={styles.userInfoContainer}>
-            {/* User Icon */}
-            <PhoneIcon width={35} height={35} color="#5387e0"/>
+        </View>
+        <View style={styles.userInfoContainer}>
+          {/* User Icon */}
+          <PhoneIcon size={30} color="#0057e7" />
 
-            {/* Username and Tag */}
-            <View style={styles.userdetailsContainer}>
-              <Text style={[styles.tags, { opacity: 0.6 }]}>Contact number</Text>
-              <Text style={styles.sectionItemBold}>+94 77 255 632</Text>
-            </View>
+          {/* Username and Tag */}
+          <View style={styles.userdetailsContainer}>
+            <Text style={styles.tags}>Contact number</Text>
+            <Text style={styles.sectionItemBold}>{contactNumber}</Text>
           </View>
-          <View style={styles.userInfoContainer}>
-            {/* User Icon */}
-            <HomeIcon width={35} height={35} color="#5387e0"/>
+        </View>
+        <View style={styles.userInfoContainer}>
+          {/* User Icon */}
+          <HomeIcon size={30} color="#0057e7" />
 
-            {/* Username and Tag */}
-            <View style={styles.userdetailsContainer}>
-              <Text style={[styles.tags, { opacity: 0.6 }]}>Address</Text>
-              <Text style={styles.sectionItemBold}>18, Obawatta Road, Srijayawardenapura</Text>
-            </View>
+          {/* Username and Tag */}
+          <View style={styles.userdetailsContainer}>
+            <Text style={styles.tags}>Address</Text>
+            <Text style={styles.sectionItemBold}>{address}</Text>
           </View>
-          <View style={styles.userInfoContainer}>
-            {/* User Icon */}
-            <CakeIcon width={35} height={35} color="#5387e0"/>
+        </View>
+        <View style={styles.userInfoContainer}>
+          {/* User Icon */}
+          <CakeIcon size={30} color="#0057e7" />
 
-            {/* Username and Tag */}
-            <View style={styles.userdetailsContainer}>
-              <Text style={[styles.tags, { opacity: 0.6 }]}>Birthday</Text>
-              <Text style={styles.sectionItemBold}>1995-07-13</Text>
-            </View>
+          {/* Username and Tag */}
+          <View style={styles.userdetailsContainer}>
+            <Text style={styles.tags}>Birthday</Text>
+            <Text style={styles.sectionItemBold}>{birthday}</Text>
           </View>
-        </CardComponent>
-
-        <MenuBar />
-      </SafeAreaView>
-    </ImageBackground>
+        </View>
+      </CardComponent>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Add a semi-transparent white background
+    backgroundColor: '#f2f4f5',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 20,
     position: 'relative',
-  },
-  title: {
-    position: 'absolute',
-    top: 0,
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    padding: 5,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   cardContent: {
     flexDirection: 'row',
@@ -147,7 +163,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 15, // Add elevation for shadow on Android devices
     shadowColor: '#ffffff', // Shadow color
- 
   },
   profilePicture: {
     width: 140,
@@ -155,8 +170,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: '#fff',
     marginBottom: 10,
-  
-    
   },
   userInfoContainer: {
     flexDirection: 'row',
@@ -166,35 +179,48 @@ const styles = StyleSheet.create({
 
   userdetailsContainer: {
     marginLeft: 30,
-    flexDirection: 'column',  // Change to column direction
-    alignItems: 'flex-start', 
-    justifyContent: 'flex-start',// Align items to the start
-
+    flexDirection: 'column', // Change to column direction
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start', // Align items to the start
   },
- 
+
   buttonContainer: {
     flexDirection: 'row',
   },
-  
+
   tags: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 'bold',
-    color: '#5387e0',
+    color: '#0057e7',
     marginVertical: 1,
-   
   },
   sectionItemBold: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
     color: 'black',
     marginTop: 0,
-
   },
- 
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
+
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    padding: 20,
+  },
+  boxOne: {
+    width: '10%',
+    alignItems: 'center',
+  },
+  boxTwo: {
+    width: '90%',
+    alignItems: 'center',
+  },
+  heraderText: {
+    fontSize: 23,
+    fontWeight: 'bold',
+    color: 'black',
+    marginRight: 20,
   },
 });
 
