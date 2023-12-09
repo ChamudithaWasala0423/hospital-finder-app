@@ -23,7 +23,7 @@ const App: React.FC = () => {
     </View>
   );*/
 
-  const [termsVisible, setTermsVisible] = useState(false);
+  /*const [termsVisible, setTermsVisible] = useState(false);
 
   const handleOpenTerms = () => {
     setTermsVisible(true);
@@ -42,5 +42,24 @@ const App: React.FC = () => {
 
 
   );
+};*/
+const [privacyVisible, setPrivacyVisible] = useState(false);
+
+  const handleOpenPrivacy = () => {
+    setPrivacyVisible(true);
+  };
+
+  const handleClosePrivacy = () => {
+    setPrivacyVisible(false);
+  };
+
+  return (
+    <View>
+      <Button title="Show Privacy Policy" onPress={handleOpenPrivacy} />
+
+      <Privacy visible={privacyVisible} onClose={handleClosePrivacy} />
+    </View>
+  );
 };
+
 export default App;

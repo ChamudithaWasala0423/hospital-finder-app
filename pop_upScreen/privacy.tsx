@@ -18,6 +18,15 @@ const Privacy: React.FC<PrivacyModalProps> = ({ visible, onClose }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.notiText}>Privacy Policy</Text>
+          <Text style={styles.titleText}>
+            We collect and store voluntary medical and location data for improving healthcare experiences.
+
+            Standard measures are in place for data protection, though absolute security cannot be guaranteed.
+            You can access, correct, or delete your data through App settings.
+          </Text>
+          <Text style={styles.titleText}>
+          For questions, contact us at 0111122334
+          </Text>
          
         
           <TouchableOpacity  style={styles.closeButton} onPress={onClose}>
@@ -72,8 +81,8 @@ const styles = StyleSheet.create({
         //borderWidth:2
       },
       titleText: {
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        marginTop:5
       },
   });
 export default Privacy;
