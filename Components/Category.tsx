@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   subBoxTwo: {
     width: '100%',
-    height: 160,
+    height: 190,
     backgroundColor: '#dae4f4',
     borderRadius: 20,
     padding: 20,

@@ -5,6 +5,7 @@ import MenuBar from '../Components/MenuBar';
 import {BookmarkIcon} from 'react-native-heroicons/solid';
 import Category from '../Components/Category';
 import SearchBox from '../Components/SearchBox';
+// import MenuBarTwo from '../Components/MenuBarTwo';
 
 const HomeScreen = () => {
   return (
@@ -25,6 +26,7 @@ const HomeScreen = () => {
           </View>
         </View>
         <SearchBox />
+        {/* <MenuBarTwo /> */}
         <Category />
       </View>
       <MenuBar />

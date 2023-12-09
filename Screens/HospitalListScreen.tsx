@@ -5,6 +5,7 @@ import SearchBox from '../Components/SearchBox';
 import MenuBar from '../Components/MenuBar';
 import CardList from '../Components/CardList';
 import Geolocation from '@react-native-community/geolocation';
+// import MenuBarTwo from '../Components/MenuBarTwo';
 
 const HospitalListScreen = () => {
   const [hospitalData, setHospitalData] = useState<any>({results: []});
@@ -39,6 +40,7 @@ const HospitalListScreen = () => {
           <Text style={styles.heraderText}>List of Hospitals</Text>
         </View>
         <SearchBox />
+        {/* <MenuBarTwo /> */}
       </View>
       <ScrollView>
         {hospitalData.results.map(
