@@ -1,6 +1,7 @@
+/* eslint-disable prettier/prettier */
 // Import necessary modules from React and React Native
 import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
+import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
@@ -24,15 +25,11 @@ const Splash: React.FC = () => {
     // Use ImageBackground to create the background with an image
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <View style={styles.container}>
-        {/* Overlay the icon.png over the text */}
         <View style={styles.overlayContainer}>
-      
-        <Image source={iconImage} style={styles.image} />
+          <Image source={iconImage} style={styles.image} />
           <Text style={styles.text}>
             <Text style={styles.colorText}>Welcome To Hospital Finder! </Text>
           </Text>
-          
-        
         </View>
       </View>
     </ImageBackground>
@@ -48,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
   overlayContainer: {
-    alignItems: 'flex-start', 
+    alignItems: 'flex-start',
   },
   text: {
     fontSize: 75,
@@ -72,5 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// Export the component
 export default Splash;
