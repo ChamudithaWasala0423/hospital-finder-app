@@ -18,6 +18,22 @@ const Terms: React.FC<TermsModalProps> = ({ visible, onClose }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.notiText}>Terms of use</Text>
+
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>Welcome</Text>
+            <Text style={styles.termsText}>
+              Thank you for using our Patient Management and Hospital Finder
+              App. By using the app, you agree to these simple terms.
+            </Text>
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>Using the App</Text>
+            <Text style={styles.termsText}>
+              This app is for finding nearby
+              healthcare facilities. Please use it responsibly for your
+              healthcare needs.
+            </Text>
+          </View>
          
         
           <TouchableOpacity  style={styles.closeButton} onPress={onClose}>
@@ -45,7 +61,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       elevation: 5,
       width:"80%",
-      height:"40%",
+      height:"75%",
 
     },
     closeButton: {
@@ -63,17 +79,23 @@ const styles = StyleSheet.create({
         color:'#000000'
     },
     titleContainer: {
-        backgroundColor: '#e0e0e0',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
-        marginTop:30,
-        //borderColor:'#000000',
-        //borderWidth:2
-      },
-      titleText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-      },
+      //backgroundColor: '#e0e0e0',
+      padding: 10,
+      borderRadius: 5,
+      marginBottom: 10,
+      marginTop: 30,
+    },
+    titleText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginTop:5,
+      color:'#000000'
+    },
+    termsText:{
+      fontSize:15,
+      //color:'#000000',
+      marginTop:5,
+    }
+    
   });
 export default Terms;
