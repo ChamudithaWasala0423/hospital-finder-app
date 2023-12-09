@@ -1,6 +1,6 @@
-
-import React, { ReactNode } from 'react';
-import { View, ViewStyle } from 'react-native';
+/* eslint-disable prettier/prettier */
+import React, {ReactNode} from 'react';
+import {View, ViewStyle} from 'react-native';
 
 interface CardComponentProps {
   color?: string;
@@ -24,7 +24,7 @@ const CardComponent: React.FC<CardComponentProps> = ({
   children,
 }) => {
   const cardStyles: ViewStyle = {
-    backgroundColor: color || 'black',
+    backgroundColor: color || 'white',
     width: width || '90%',
     height: height || '25%',
     marginTop: marginTop || 10,
@@ -33,7 +33,6 @@ const CardComponent: React.FC<CardComponentProps> = ({
     borderRadius: 8,
     alignItems: alignItems || 'center',
     justifyContent: justifyContent || 'center',
-    elevation: 10,
   };
 
   return <View style={cardStyles}>{children}</View>;
