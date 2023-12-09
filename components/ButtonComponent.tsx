@@ -1,6 +1,13 @@
+/* eslint-disable prettier/prettier */
 // ButtonComponent.tsx
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 
 interface ButtonComponentProps {
   backgroundColor: string;
@@ -27,7 +34,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
   width = 150, // Default width
   height = 50, // Default height
   textStyle = {}, // Default empty object for optional customization
-  buttonStyle = {}, // Default empty object for optional customization
+  buttonStyle = {},
 }) => {
   return (
     <TouchableOpacity
@@ -43,9 +50,8 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
         alignItems: 'center', // Center horizontally
         ...buttonStyle, // Apply custom button styles
       }}
-      onPress={onPress}
-    >
-      <Text style={{ color: fontColor, ...textStyle }}>{buttonText}</Text>
+      onPress={onPress}>
+      <Text style={{color: fontColor, ...textStyle}}>{buttonText}</Text>
     </TouchableOpacity>
   );
 };
@@ -54,7 +60,6 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     borderWidth: 1,
-    elevation: 10,
   },
 });
 
