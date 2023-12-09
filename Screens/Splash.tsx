@@ -1,71 +1,61 @@
 /* eslint-disable prettier/prettier */
-// Import necessary modules from React and React Native
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, Image, ProgressBarAndroid} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
-const iconImage = require('../assets/icon.png');
-
-// Create a functional component
 const Splash: React.FC = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Navigate to another screen after 10 seconds
     const timeout = setTimeout(() => {
-      navigation.navigate('Login'); // Update with the correct screen name
-    }, 50);
+      navigation.navigate('Login');
+    }, 4000);
 
     // Cleanup the timeout to avoid memory leaks
     return () => clearTimeout(timeout);
   }, [navigation]);
 
   return (
-    // Use ImageBackground to create the background with an image
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <View style={styles.container}>
-        <View style={styles.overlayContainer}>
-          <Image source={iconImage} style={styles.image} />
-          <Text style={styles.text}>
-            <Text style={styles.colorText}>Welcome To Hospital Finder! </Text>
-          </Text>
+    <View style={styles.container}>
+      <View style={styles.subContainer}>
+        <View style={styles.iconBackground}>
+          <Image source={require('../assets/send.png')} style={styles.image} />
         </View>
+        <Text style={styles.textStyle}>Hospital Finder</Text>
+        <ProgressBarAndroid color="white" />
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
-// Create a StyleSheet for styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#0057e7',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    justifyContent: 'center',
   },
-  overlayContainer: {
-    alignItems: 'flex-start',
+  subContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  text: {
-    fontSize: 75,
-    color: 'rgba(255, 255, 255, 0)',
-    fontWeight: 'bold',
+  iconBackground: {
+    width: 100,
+    height: 100,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
-    width: 75,
-    height: 75,
-    resizeMode: 'contain',
-    marginVertical: 20,
-    borderRadius: 20,
+    width: 50,
+    height: 50,
   },
-  colorText: {
-    color: 'rgba(48, 132, 201, 0.9)',
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
+  textStyle: {
+    fontSize: 30,
+    color: 'white',
+    fontWeight: 'bold',
+    marginTop: 10,
   },
 });
 
