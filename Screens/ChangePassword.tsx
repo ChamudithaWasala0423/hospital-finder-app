@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet, ImageBackground } from 'react-native';
+/* eslint-disable prettier/prettier */
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 const ChangePassword: React.FC = () => {
@@ -17,7 +26,10 @@ const ChangePassword: React.FC = () => {
 
         // Perform a null check before using email
         if (email) {
-          const credential = auth.EmailAuthProvider.credential(email, currentPassword);
+          const credential = auth.EmailAuthProvider.credential(
+            email,
+            currentPassword,
+          );
 
           // Reauthenticate the user before changing the password
           await user.reauthenticateWithCredential(credential);
@@ -48,7 +60,7 @@ const ChangePassword: React.FC = () => {
           placeholder="Current Password"
           placeholderTextColor="grey"
           secureTextEntry
-          onChangeText={(text) => setCurrentPassword(text)}
+          onChangeText={text => setCurrentPassword(text)}
           value={currentPassword}
         />
 
@@ -58,7 +70,7 @@ const ChangePassword: React.FC = () => {
           placeholder="New Password"
           placeholderTextColor="grey"
           secureTextEntry
-          onChangeText={(text) => setNewPassword(text)}
+          onChangeText={text => setNewPassword(text)}
           value={newPassword}
         />
 
@@ -87,7 +99,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   input: {
-    height: "5%",
+    height: '5%',
     width: '60%',
     borderColor: 'gray',
     borderWidth: 1,
