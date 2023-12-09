@@ -64,12 +64,13 @@ const styles = StyleSheet.create({
       },
     notiText:{
         fontSize:25,
-        color:'#000000',
+        color:'#0057E7',
         fontWeight:'bold'
     },
     closetext:{
         fontSize:15,
-        color:'#000000'
+        color:'#000000',
+        fontWeight:'bold'
     },
     titleContainer: {
         backgroundColor: '#e0e0e0',
@@ -81,8 +82,11 @@ const styles = StyleSheet.create({
         //borderWidth:2
       },
       titleText: {
-        fontSize: 15,
-        marginTop:5
+        fontSize: 13,
+        marginTop:7,
+        justifyContent:'space-around',
+        color:'#000000',
+        alignContent:'center'
       },
   });
 export default Privacy;

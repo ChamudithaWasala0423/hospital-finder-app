@@ -16,14 +16,14 @@ const App: React.FC = () => {
   };
   return(
     <View>
-      /*
+      
       <Button title=" Country " onPress={handleToggleModal} />
       <Country visible={modalVisible} onClose={handleToggleModal} />
       
     </View>
   );*/
 
-  /*const [termsVisible, setTermsVisible] = useState(false);
+  const [termsVisible, setTermsVisible] = useState(false);
 
   const handleOpenTerms = () => {
     setTermsVisible(true);
@@ -42,8 +42,8 @@ const App: React.FC = () => {
 
 
   );
-};*/
-const [privacyVisible, setPrivacyVisible] = useState(false);
+};
+/*const [privacyVisible, setPrivacyVisible] = useState(false);
 
   const handleOpenPrivacy = () => {
     setPrivacyVisible(true);
@@ -55,11 +55,11 @@ const [privacyVisible, setPrivacyVisible] = useState(false);
 
   return (
     <View>
-      <Button title="Show Privacy Policy" onPress={handleOpenPrivacy} />
+      <Button title="Privacy Policy" onPress={handleOpenPrivacy} />
 
       <Privacy visible={privacyVisible} onClose={handleClosePrivacy} />
     </View>
   );
-};
+};*/
 
 export default App;

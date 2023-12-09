@@ -56,7 +56,7 @@ const Country: React.FC<CountryModalProps> = ({ visible, onClose }) => {
           </ScrollView>
         
           <TouchableOpacity  style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closetext}>Close</Text>
+            <Text style={styles.closetext}>Ok</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -87,15 +87,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 10,
         right: 10,
+        
       },
     countryText:{
         fontSize:25,
-        color:'#000000',
+        color:'#0057E7',
         fontWeight:'bold'
     },
     closetext:{
         fontSize:15,
-        color:'#000000'
+        color:'#000000',
+        fontWeight:'bold'
     },
     titleContainer: {
         backgroundColor: '#e0e0e0',

@@ -22,7 +22,7 @@ const Terms: React.FC<TermsModalProps> = ({ visible, onClose }) => {
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>Welcome</Text>
             <Text style={styles.termsText}>
-              Thank you for using our Patient Management and Hospital Finder
+              Thank you for using our  Hospital Finder
               App. By using the app, you agree to these simple terms.
             </Text>
           </View>
@@ -71,12 +71,13 @@ const styles = StyleSheet.create({
       },
     notiText:{
         fontSize:25,
-        color:'#000000',
+        color:'#0057E7',
         fontWeight:'bold'
     },
     closetext:{
         fontSize:15,
-        color:'#000000'
+        color:'#000000',
+        fontWeight:'bold'
     },
     titleContainer: {
       //backgroundColor: '#e0e0e0',
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     termsText:{
       fontSize:15,
       //color:'#000000',
-      marginTop:5,
+      marginTop:10,
     }
     
   });
