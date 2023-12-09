@@ -1,27 +1,64 @@
 /* eslint-disable prettier/prettier */
 import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MenuBar from '../Components/MenuBar';
 import {BookmarkIcon} from 'react-native-heroicons/solid';
 import Category from '../Components/Category';
 import SearchBox from '../Components/SearchBox';
-import {useNavigation} from '@react-navigation/native';;
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from '@firebase/firestore';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HomeScreen: React.FC = () =>{
-  const navigation = useNavigation();
+const HomeScreen: React.FC = () => {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const fetchUserDetails = async () => {
+    const firestore = getFirestore();
+
+    try {
+      const userUid = await AsyncStorage.getItem('UID');
+      console.log(userUid, 'test');
+      if (userUid) {
+        const userDetailsCollection = collection(firestore, 'userDetails');
+        const q = query(userDetailsCollection, where('UID', '==', userUid));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.size > 0) {
+          const userData = querySnapshot.docs[0].data();
+          setUsername(userData.name || 'Add name');
+        } else {
+          console.log(`No documents found with the specified UID.`);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
+
+  const firstLetter = username.charAt(0);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.subHeader}>
           <View style={styles.box}>
             <View style={styles.profileImg}>
-              <Text style={styles.profileText}>M</Text>
+              <Text style={styles.profileText}>{firstLetter}</Text>
             </View>
           </View>
           <View style={styles.boxTwo}>
             <Text style={styles.helloText}>Hello</Text>
-            <Text style={styles.nameText}>Marques brownlee</Text>
+            <Text style={styles.nameText}>{username}</Text>
           </View>
           <View style={styles.box}>
             <BookmarkIcon size={25} color="#0057e7" />
@@ -43,7 +80,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: '100%',
-    height: 320,
+    height: 290,
   },
   subHeader: {
     width: '100%',

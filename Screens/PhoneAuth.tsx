@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+/* eslint-disable prettier/prettier */
+import React, {useState} from 'react';
+import {View, Text, TextInput, Button, Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 const PhoneAuth: React.FC = () => {
@@ -28,11 +29,11 @@ const PhoneAuth: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Enter your phone number:</Text>
       <TextInput
         placeholder="Phone number"
-        onChangeText={(text) => setPhoneNumber(text)}
+        onChangeText={text => setPhoneNumber(text)}
         value={phoneNumber}
         keyboardType="phone-pad"
       />
@@ -41,7 +42,7 @@ const PhoneAuth: React.FC = () => {
       <Text>Enter verification code:</Text>
       <TextInput
         placeholder="Verification code"
-        onChangeText={(text) => setVerificationCode(text)}
+        onChangeText={text => setVerificationCode(text)}
         value={verificationCode}
         keyboardType="numeric"
       />

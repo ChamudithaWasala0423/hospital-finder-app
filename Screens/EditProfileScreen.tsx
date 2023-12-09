@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable prettier/prettier */
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {
   UserCircleIcon,
@@ -15,20 +17,24 @@ import {
   PhoneIcon,
   HomeIcon,
   CakeIcon,
+  ArrowSmallLeftIcon,
 } from 'react-native-heroicons/outline';
-import MenuBar from '../components/MenuBar';
-import CardComponent from '../components/CardComponent';
-import ButtonComponent from '../components/ButtonComponent';
-import { getFirestore, collection, getDocs, addDoc, doc, query, where, updateDoc  } from '@firebase/firestore';
-
-// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
-
+import MenuBar from '../Components/MenuBar';
+import CardComponent from '../Components/CardComponent';
+import ButtonComponent from '../Components/ButtonComponent';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  query,
+  where,
+  updateDoc,
+} from '@firebase/firestore';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const profileImage = require('../assets/profile.png');
-const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
+import {useNavigation} from '@react-navigation/native';
 
 const EditProfileScreen = () => {
   const [username, setUsername] = useState('');
@@ -46,7 +52,7 @@ const EditProfileScreen = () => {
   const getUserUid = async () => {
     try {
       const userUid = await AsyncStorage.getItem('UID');
-      console.log(userUid)
+      console.log(userUid);
       return userUid;
     } catch (error) {
       // Handle errors, such as AsyncStorage not being available
@@ -54,14 +60,13 @@ const EditProfileScreen = () => {
       return null;
     }
   };
-  
 
   const fetchUserDetails = async () => {
     const firestore = getFirestore();
 
     try {
       const userUid = await AsyncStorage.getItem('UID');
-console.log(userUid, "test");
+      console.log(userUid, 'test');
       if (userUid) {
         const userDetailsCollection = collection(firestore, 'userDetails');
         const q = query(userDetailsCollection, where('UID', '==', userUid));
@@ -87,7 +92,6 @@ console.log(userUid, "test");
       console.error('Error fetching user details:', error);
     }
   };
-  
 
   const handleSave = async () => {
     try {
@@ -96,11 +100,11 @@ console.log(userUid, "test");
       const userDetailsCollection = collection(firestore, 'userDetails');
       const q = query(userDetailsCollection, where('UID', '==', userUid));
       const querySnapshot = await getDocs(q);
-  
+
       if (querySnapshot.size > 0) {
         // Document with the specified UID exists
         const userDocRef = doc(userDetailsCollection, querySnapshot.docs[0].id);
-  
+
         await updateDoc(userDocRef, {
           name: username,
           email: email,
@@ -108,7 +112,7 @@ console.log(userUid, "test");
           address: address,
           birthday: birthday,
         });
-  
+
         setIsChanged(false);
         console.log('User details updated successfully!');
       } else {
@@ -121,7 +125,7 @@ console.log(userUid, "test");
           address: address,
           birthday: birthday,
         });
-  
+
         setIsChanged(false);
         console.log('New user details created with UID:', userUid);
       }
@@ -129,80 +133,92 @@ console.log(userUid, "test");
       console.error('Error updating/creating user details:', error);
     }
   };
-  
 
   const handleInputChange = () => {
     setIsChanged(true);
   };
 
-  return (
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Edit Profile</Text>
+  const navigation = useNavigation();
 
-        <CardComponent
-          color="#81c9f0"
-          width="90%"
-          height="49%"
-          marginTop={40}
-          marginBottom={10}
-          alignItems="flex-start"
-          justifyContent="flex-start"
-        >
-          <ScrollView>
-            <View style={styles.userInfoContainer}>
-              <UserCircleIcon width={35} height={35} color="#4dbac4" />
-              <View style={styles.userdetailsContainer}>
-                <Text style={[styles.tags, { opacity: 0.6 }]}>Username</Text>
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.boxOne} onPress={navigation.goBack}>
+          <ArrowSmallLeftIcon size={25} color="#747474" />
+        </TouchableOpacity>
+        <View style={styles.boxTwo}>
+          <Text style={styles.heraderText}>Edit your profile</Text>
+        </View>
+      </View>
+      <CardComponent
+        color="#fff"
+        width="90%"
+        height="60%"
+        marginTop={40}
+        marginBottom={10}
+        alignItems="flex-start"
+        justifyContent="flex-start">
+        <ScrollView>
+          <View style={styles.userInfoContainer}>
+            <UserCircleIcon size={30} color="#0057e7" />
+            <View style={styles.userdetailsContainer}>
+              <Text style={styles.tags}>Username</Text>
+              <View style={styles.textBack}>
                 <TextInput
                   style={styles.sectionItemBold}
                   value={username}
-                  onChangeText={(text) => {
+                  onChangeText={text => {
                     setUsername(text);
                     handleInputChange();
                   }}
                 />
               </View>
             </View>
+          </View>
 
-            <View style={styles.userInfoContainer}>
-              <EnvelopeIcon width={35} height={35} color="#4dbac4" />
-              <View style={styles.userdetailsContainer}>
-                <Text style={[styles.tags, { opacity: 0.6 }]}>Email</Text>
+          <View style={styles.userInfoContainer}>
+            <EnvelopeIcon size={30} color="#0057e7" />
+            <View style={styles.userdetailsContainer}>
+              <Text style={styles.tags}>Email</Text>
+              <View style={styles.textBack}>
                 <TextInput
                   style={styles.sectionItemBold}
                   value={email}
-                  onChangeText={(text) => {
+                  onChangeText={text => {
                     setEmail(text);
                     handleInputChange();
                   }}
                 />
               </View>
             </View>
+          </View>
 
-            <View style={styles.userInfoContainer}>
-              <PhoneIcon width={35} height={35} color="#4dbac4" />
-              <View style={styles.userdetailsContainer}>
-                <Text style={[styles.tags, { opacity: 0.6 }]}>Contact number</Text>
+          <View style={styles.userInfoContainer}>
+            <PhoneIcon size={30} color="#0057e7" />
+            <View style={styles.userdetailsContainer}>
+              <Text style={styles.tags}>Contact number</Text>
+              <View style={styles.textBack}>
                 <TextInput
                   style={styles.sectionItemBold}
                   value={contactNumber}
-                  onChangeText={(text) => {
+                  onChangeText={text => {
                     setContactNumber(text);
                     handleInputChange();
                   }}
                 />
               </View>
             </View>
+          </View>
 
-            <View style={styles.userInfoContainer}>
-              <HomeIcon width={35} height={35} color="#4dbac4" />
-              <View style={styles.userdetailsContainer}>
-                <Text style={[styles.tags, { opacity: 0.6 }]}>Address</Text>
+          <View style={styles.userInfoContainer}>
+            <HomeIcon size={30} color="#0057e7" />
+            <View style={styles.userdetailsContainer}>
+              <Text style={styles.tags}>Address</Text>
+              <View style={styles.textBack}>
                 <TextInput
                   style={styles.sectionItemBold}
                   value={address}
-                  onChangeText={(text) => {
+                  onChangeText={text => {
                     setAddress(text.substring(0, 30));
                     handleInputChange();
                   }}
@@ -210,98 +226,52 @@ console.log(userUid, "test");
                 />
               </View>
             </View>
+          </View>
 
-            <View style={styles.userInfoContainer}>
-              <CakeIcon width={35} height={35} color="#4dbac4" />
-              <View style={styles.userdetailsContainer}>
-                <Text style={[styles.tags, { opacity: 0.6 }]}>Birthday</Text>
+          <View style={styles.userInfoContainer}>
+            <CakeIcon size={30} color="#0057e7" />
+            <View style={styles.userdetailsContainer}>
+              <Text style={styles.tags}>Birthday</Text>
+              <View style={styles.textBack}>
                 <TextInput
                   style={styles.sectionItemBold}
                   value={birthday}
-                  onChangeText={(text) => {
+                  onChangeText={text => {
                     setBirthday(text);
                     handleInputChange();
                   }}
                 />
               </View>
             </View>
-          </ScrollView>
-        </CardComponent>
+          </View>
+        </ScrollView>
+      </CardComponent>
 
-        {isChanged && (
-          <ButtonComponent
-            backgroundColor="#4CAF50"
-            borderRadius={30}
-            marginHorizontal={5}
-            width={100}
-            height={40}
-            fontColor="white"
-            borderColor="#4CAF50"
-            onPress={handleSave}
-            buttonText="Save Changes"
-          />
-        )}
-        <CardComponent color="#50cdd9" width="90%" height="25%" marginTop={0} marginBottom={20} alignItems="center" justifyContent="center">
-          {/* Custom content for the first card */}
-          <View style={styles.cardContent}>
-            <View style={styles.profilePictureContainer}>
-              <Image
-                source={profileImage}
-                style={styles.profilePicture}
-              />
-            </View>
-            
-          </View>
-          <View style={styles.buttonContainer}>
-            <ButtonComponent
-              backgroundColor="white"
-              borderRadius={30}
-              marginHorizontal={5}
-              width={120}
-              height={40}
-              fontColor="black"
-              borderColor="white"
-              onPress={
-                fetchUserDetails
-    
-            
-            }
-              
-              buttonText="Edit Profile Picture"
-            />
-          </View>
-        </CardComponent>
-        <View style={styles.bottomBarContainer}>
-          <MenuBar />
-        </View>
-      </SafeAreaView>
-    </ImageBackground>
+      {isChanged && (
+        <ButtonComponent
+          backgroundColor="#0057e7"
+          borderRadius={10}
+          marginHorizontal={5}
+          width={100}
+          height={40}
+          fontColor="white"
+          borderColor="#0057e7"
+          onPress={handleSave}
+          buttonText="Save"
+        />
+      )}
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: '#f2f4f5',
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 20,
     position: 'relative',
-  },
-  title: {
-    position: 'absolute',
-    top: 0,
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    padding: 5,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   cardContent: {
     flexDirection: 'row',
@@ -336,13 +306,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   tags: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#5387e0',
+    color: '#0057e7',
     marginVertical: 0,
   },
   sectionItemBold: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#3a3d3d',
     marginTop: 0,
@@ -356,6 +326,34 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
+  },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    padding: 20,
+  },
+  boxOne: {
+    width: '10%',
+    alignItems: 'center',
+  },
+  boxTwo: {
+    width: '90%',
+    alignItems: 'center',
+  },
+  heraderText: {
+    fontSize: 23,
+    fontWeight: 'bold',
+    color: 'black',
+    marginRight: 20,
+  },
+  textBack: {
+    backgroundColor: '#f2f4f5',
+    borderRadius: 5,
+    width: 270,
+    margin: 5,
   },
 });
 
