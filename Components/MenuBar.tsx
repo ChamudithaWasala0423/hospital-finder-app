@@ -46,12 +46,15 @@ const MenuBar = () => {
             Map
           </Text>
         </TouchableOpacity>
-        <View style={styles.icon}>
-          <Cog8ToothIcon size={25} color={getIconColor('Settings')} />
-          <Text style={{...styles.menuText, color: getIconColor('Settings')}}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => navigation.navigate('SettingScreen')}>
+          <Cog8ToothIcon size={25} color={getIconColor('SettingScreen')} />
+          <Text
+            style={{...styles.menuText, color: getIconColor('SettingScreen')}}>
             Setting
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
