@@ -155,25 +155,6 @@ function App(): JSX.Element {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};*/
-const [rateVisible, setRateVisible] = useState(false);
-
-  const handleOpenRate= () => {
-    setRateVisible(true);
-  };
-
-  const handleCloseRate = () => {
-    setRateVisible(false);
-  };
-
-  return (
-    <View>
-      <Button title="Rate Us" onPress={handleOpenRate} />
-
-      <Rate visible={rateVisible} onClose={handleCloseRate} />
-    </View>
-  );
 };
-
 
 export default App;
