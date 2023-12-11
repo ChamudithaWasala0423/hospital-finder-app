@@ -10,6 +10,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   UserCircleIcon,
@@ -114,7 +115,7 @@ const EditProfileScreen = () => {
         });
 
         setIsChanged(false);
-        console.log('User details updated successfully!');
+        Alert.alert('User details updated successfully!');
       } else {
         // Document with the specified UID doesn't exist, create a new document
         const newDocRef = await addDoc(userDetailsCollection, {
@@ -127,10 +128,10 @@ const EditProfileScreen = () => {
         });
 
         setIsChanged(false);
-        console.log('New user details created with UID:', userUid);
+        
       }
     } catch (error) {
-      console.error('Error updating/creating user details:', error);
+      Alert.alert('Error updating user details');
     }
   };
 
