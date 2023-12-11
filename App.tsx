@@ -40,6 +40,7 @@ AppRegistry.registerComponent(appName, () => App);
 import {initializeApp} from 'firebase/app';
 import AddProfileData from './Screens/AddProfileData';
 import OfflineScreen from './Screens/OfflineScreen';
+import ForgotPasswordScreen from './Screens/ForgotPasswordScreen';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAIMt3eNhwh7fRl32lfd7KAhOeKA89aiyk',
@@ -116,9 +117,18 @@ function App(): JSX.Element {
             cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
           }}
         />
+        
         <Stack.Screen
           name="ChangePassword"
           component={ChangePassword}
+          options={{
+            cardStyleInterpolator:
+              CardStyleInterpolators.forModalPresentationIOS,
+          }}
+        />
+        <Stack.Screen
+          name="ForgotPasswordScreen"
+          component={ForgotPasswordScreen}
           options={{
             cardStyleInterpolator:
               CardStyleInterpolators.forModalPresentationIOS,
