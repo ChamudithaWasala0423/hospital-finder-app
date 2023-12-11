@@ -155,6 +155,6 @@ function App(): JSX.Element {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;
