@@ -6,6 +6,8 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  Modal,
+  FlatList,
 } from 'react-native';
 import MenuBar from '../Components/MenuBar';
 import CardComponent from '../Components/CardComponent';
@@ -26,12 +28,20 @@ const SettingScreen = () => {
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [countryNames, setCountryNames] = useState([]);
+  const [countryModalVisible, setCountryModalVisible] = useState(false);
+  const [privacyPolicyContent, setPrivacyPolicyContent] = useState('');
+  const [privacyPolicyModalVisible, setPrivacyPolicyModalVisible] =
+    useState(false);
+  const [termsContent, setTermsContent] = useState('');
+  const [TermsModalVisible, setTermsModalVisible] = useState(false);
+  const [aboutContent, setAboutContent] = useState('');
+  const [aboutModalVisible, setAboutModalVisible] = useState(false);
 
   const handleLogout = async () => {
     try {
       // Sign out the user
       await auth().signOut();
-      // Navigate to the login screen
       navigation.navigate('Login');
     } catch (error: any) {
       console.error('Logout Error:', error.message);
@@ -64,6 +74,52 @@ const SettingScreen = () => {
     } catch (error) {
       console.error('Error fetching user details:', error);
     }
+  };
+
+  const openCountryPopup = async () => {
+    try {
+      const response = await fetch('https://restcountries.com/v3.1/all');
+      const data = await response.json();
+      const names = data.map(country => country.name.common);
+      setCountryNames(names);
+      setCountryModalVisible(true);
+    } catch (error) {
+      console.error('Error fetching country names:', error);
+    }
+  };
+
+  const openPrivacy = () => {
+    const customPrivacyPolicy = ` 
+    We collect and store voluntary
+    medical and location data for 
+    improving healthcare experiences.
+    Standard measures are in place for 
+    data protection, though absolute 
+    security cannot be guaranteed.
+    You can access, correct, 
+    or delete your data through 
+    App settings.`;
+    setPrivacyPolicyContent(customPrivacyPolicy);
+    setPrivacyPolicyModalVisible(true);
+  };
+
+  const openTerms = () => {
+    const customTerms = `
+    This app is for finding nearby
+    healthcare facilities. 
+    Please use it responsibly for your
+    healthcare needs.`;
+    setTermsContent(customTerms);
+    setTermsModalVisible(true);
+  };
+
+  const openAbout = () => {
+    const customAbout = `
+    H.M.C.P.B.Wasala - AF/20/16127 
+    K. U. Randeniya - AF/20/16256 
+    N.M.A.S.Tharuka - AF/20/16327 `;
+    setAboutContent(customAbout);
+    setAboutModalVisible(true);
   };
 
   const firstLetter = username.charAt(0);
@@ -129,14 +185,116 @@ const SettingScreen = () => {
         <TouchableOpacity onPress={() => navigation.navigate('ChangePassword')}>
           <Text style={styles.sectionItem}>Security</Text>
         </TouchableOpacity>
-
-        <Text style={styles.sectionItem}>country</Text>
+        <TouchableOpacity onPress={openCountryPopup}>
+          <Text style={styles.sectionItem}>Country</Text>
+        </TouchableOpacity>
+        {/* Country Popup Modal */}
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={countryModalVisible}
+          onRequestClose={() => setCountryModalVisible}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Country</Text>
+              <FlatList
+                data={countryNames}
+                keyExtractor={item => item}
+                renderItem={({item}) => (
+                  <Text style={styles.modalItem}>{item}</Text>
+                )}
+              />
+              <TouchableOpacity
+                onPress={() => setCountryModalVisible(false)}
+                style={styles.modalCloseButton}>
+                <Text style={styles.modalCloseButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.horizontalLine} />
-
         <Text style={styles.sectionTitle}>General</Text>
-        <Text style={styles.sectionItem}>privacy policy</Text>
-        <Text style={styles.sectionItem}>terms of use</Text>
-        <Text style={styles.sectionItem}>rate us</Text>
+        <TouchableOpacity onPress={openPrivacy}>
+          <Text style={styles.sectionItem}>Privacy Policy</Text>
+        </TouchableOpacity>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={privacyPolicyModalVisible}
+          onRequestClose={() => setPrivacyPolicyModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              {privacyPolicyContent ? (
+                <>
+                  <Text style={styles.modalTitle}>Privacy Policy</Text>
+                  <Text style={styles.modalItem}>{privacyPolicyContent}</Text>
+                </>
+              ) : (
+                <Text style={styles.modalTitle}>Loading...</Text>
+              )}
+              <TouchableOpacity
+                onPress={() => setPrivacyPolicyModalVisible(false)}
+                style={styles.modalCloseButton}>
+                <Text style={styles.modalCloseButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <TouchableOpacity onPress={openTerms}>
+          <Text style={styles.sectionItem}>Terms of use</Text>
+        </TouchableOpacity>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={TermsModalVisible}
+          onRequestClose={() => setTermsModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              {termsContent ? (
+                <>
+                  <Text style={styles.modalTitle}>Terms of use</Text>
+                  <Text style={styles.modalItem}>{termsContent}</Text>
+                </>
+              ) : (
+                <Text style={styles.modalTitle}>Loading...</Text>
+              )}
+              <TouchableOpacity
+                onPress={() => setTermsModalVisible(false)}
+                style={styles.modalCloseButton}>
+                <Text style={styles.modalCloseButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <TouchableOpacity onPress={openAbout}>
+          <Text style={styles.sectionItem}>About</Text>
+        </TouchableOpacity>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={aboutModalVisible}
+          onRequestClose={() => setAboutModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              {aboutContent ? (
+                <>
+                  <Text style={styles.modalTitle}>About</Text>
+                  <Text style={styles.modalTitle}>
+                    Developer Info - Group 07
+                  </Text>
+                  <Text style={styles.modalItem}>{aboutContent}</Text>
+                </>
+              ) : (
+                <Text style={styles.modalTitle}>Loading...</Text>
+              )}
+              <TouchableOpacity
+                onPress={() => setAboutModalVisible(false)}
+                style={styles.modalCloseButton}>
+                <Text style={styles.modalCloseButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <TouchableOpacity onPress={handleLogout}>
           <Text style={styles.sectionItem}>Logout</Text>
         </TouchableOpacity>
@@ -168,8 +326,8 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: 'row',
-    alignItems: 'center', // Align items vertically in the row
-    justifyContent: 'space-between', // Distribute items evenly along the row
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   profilePictureContainer: {
     marginRight: 20,
@@ -217,6 +375,40 @@ const styles = StyleSheet.create({
   profileText: {
     fontSize: 30,
     color: '#fff',
+    fontWeight: 'bold',
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    maxHeight: '80%',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalItem: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  modalCloseButton: {
+    backgroundColor: '#0057e7',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+    alignSelf: 'flex-end',
+  },
+  modalCloseButtonText: {
+    color: 'white',
     fontWeight: 'bold',
   },
 });
