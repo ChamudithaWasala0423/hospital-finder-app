@@ -30,27 +30,32 @@ const Login: React.FC = () => {
   const handleLoginPress = async () => {
     try {
       // Sign in user with email and password
-      const userCredential = await auth().signInWithEmailAndPassword(
-        email,
-        pass,
-      );
+      const userCredential = await auth().signInWithEmailAndPassword(email, pass);
+      
       // Extract UID from the userCredential
       const userUid = userCredential.user.uid;
-
+  
       // Save the UID to AsyncStorage
       await AsyncStorage.setItem('UID', userUid);
       const userUidread = await AsyncStorage.getItem('UID');
       console.log(userUidread);
+  
       // If successful, show a success message or navigate to the next screen
       Alert.alert('Success', 'Login successful!');
-
+      
       navigation.navigate('Home');
     } catch (error: any) {
-      // If there's an error, show an error message
-      Alert.alert('Error', error.message);
+      // Check for custom error message based on error code
+      let errorMessage = 'Incorrect username or password. Please check your credentials.';
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+        Alert.alert('Error', errorMessage);
+      } else {
+        // For other errors, show the original error message
+        Alert.alert('Error', error.message);
+      }
     }
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.MainBox}>
