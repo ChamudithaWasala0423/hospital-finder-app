@@ -101,7 +101,7 @@ const Login: React.FC = () => {
       <View style={styles.subButtonBack}>
         <TouchableOpacity
           style={styles.mainButtonTwo}
-          onPress={() => navigation.navigate('PhoneVerification')}>
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
           <PhoneIcon size={20} color={'black'} />
           <Text style={styles.signinButtonTwo}>Continue with Phone</Text>
         </TouchableOpacity>
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     backgroundColor: 'white',
     borderRadius: 10,
+    color: 'black'
   },
   mainButton: {
     width: '85%',

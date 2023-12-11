@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     backgroundColor: 'white',
     borderRadius: 10,
+    color: 'black'
   },
   mainButton: {
     width: '85%',
