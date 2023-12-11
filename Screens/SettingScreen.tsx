@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
+  Alert,
 } from 'react-native';
 import MenuBar from '../Components/MenuBar';
 import CardComponent from '../Components/CardComponent';
@@ -43,6 +44,7 @@ const SettingScreen = () => {
       // Sign out the user
       await auth().signOut();
       navigation.navigate('Login');
+      Alert.alert('Logout Successfull!');
     } catch (error: any) {
       console.error('Logout Error:', error.message);
     }
