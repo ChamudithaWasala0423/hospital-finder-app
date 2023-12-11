@@ -120,7 +120,8 @@ function App(): JSX.Element {
           name="ChangePassword"
           component={ChangePassword}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forModalPresentationIOS,
           }}
         />
         <Stack.Screen

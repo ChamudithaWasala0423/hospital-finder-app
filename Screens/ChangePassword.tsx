@@ -4,18 +4,23 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Alert,
   StyleSheet,
-  ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
+import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 
 const ChangePassword: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const navigation = useNavigation();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleChangePassword = async () => {
     try {
@@ -50,8 +55,8 @@ const ChangePassword: React.FC = () => {
   };
 
   return (
-    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.subContainer}>
         <Text style={styles.title}>Change Your Password</Text>
 
         <Text style={styles.label}>Current Password:</Text>
@@ -59,24 +64,49 @@ const ChangePassword: React.FC = () => {
           style={styles.input}
           placeholder="Current Password"
           placeholderTextColor="grey"
-          secureTextEntry
+          secureTextEntry={!showPassword}
           onChangeText={text => setCurrentPassword(text)}
           value={currentPassword}
         />
-
+        <TouchableOpacity onPress={handleTogglePassword} style={styles.eyeIcon}>
+          {showPassword ? (
+            <EyeIcon size={24} color="gray" />
+          ) : (
+            <EyeSlashIcon size={24} color="gray" />
+          )}
+        </TouchableOpacity>
         <Text style={styles.label}>New Password:</Text>
         <TextInput
           style={styles.input}
           placeholder="New Password"
           placeholderTextColor="grey"
-          secureTextEntry
+          secureTextEntry={!showPassword}
           onChangeText={text => setNewPassword(text)}
           value={newPassword}
         />
-
-        <Button title="Change Password" onPress={handleChangePassword} />
+        <TouchableOpacity
+          onPress={handleTogglePassword}
+          style={styles.eyeIconTwo}>
+          {showPassword ? (
+            <EyeIcon size={24} color="gray" />
+          ) : (
+            <EyeSlashIcon size={24} color="gray" />
+          )}
+        </TouchableOpacity>
+        <View style={styles.bottomButtons}>
+          <TouchableOpacity
+            style={styles.buttonBack}
+            onPress={handleChangePassword}>
+            <Text style={{color: '#fff'}}>Change Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonBack}
+            onPress={navigation.goBack}>
+            <Text style={{color: '#fff'}}>Go back</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -85,7 +115,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: '#f2f4f5',
+    marginHorizontal: 20,
+  },
+  subContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
   },
   title: {
     color: 'black',
@@ -97,10 +136,10 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     marginTop: 10,
+    fontWeight: 'bold',
   },
   input: {
-    height: '5%',
-    width: '60%',
+    width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 8,
@@ -112,6 +151,30 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+  },
+  bottomButtons: {
+    flexDirection: 'row',
+  },
+  buttonBack: {
+    backgroundColor: '#0057e7',
+    borderRadius: 10,
+    padding: 10,
+    margin: 8,
+    marginTop: 0,
+  },
+  eyeIcon: {
+    position: 'absolute',
+    right: 10,
+    top: '25%',
+    marginRight: 40,
+    marginTop: 53,
+  },
+  eyeIconTwo: {
+    position: 'absolute',
+    right: 10,
+    top: '25%',
+    marginRight: 40,
+    marginTop: 155,
   },
 });
 

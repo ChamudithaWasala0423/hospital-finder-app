@@ -11,22 +11,18 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-import ButtonComponent from '../Components/ButtonComponent';
-import CardComponent from '../Components/CardComponent';
 import {useNavigation} from '@react-navigation/native';
-import {EyeIcon} from 'react-native-heroicons/outline'; // Corrected import
+import {EyeIcon} from 'react-native-heroicons/outline';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {EyeSlashIcon, PhoneIcon} from 'react-native-heroicons/solid';
-
-const backgroundImage = require('../assets/viewProfileBackgroundImage.jpg');
 
 const Login: React.FC = () => {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState<string>('');
   const [pass, setPassword] = useState<string>('');
-  const [showPassword, setShowPassword] = useState<boolean>(false); // New state
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -79,9 +75,9 @@ const Login: React.FC = () => {
         />
         <TouchableOpacity onPress={handleTogglePassword} style={styles.eyeIcon}>
           {showPassword ? (
-            <EyeIcon size={24} color="gray" /> // Use your EyeOpenIcon component
+            <EyeIcon size={24} color="gray" />
           ) : (
-            <EyeSlashIcon size={24} color="gray" /> // Use your EyeClosedIcon component
+            <EyeSlashIcon size={24} color="gray" />
           )}
         </TouchableOpacity>
 
