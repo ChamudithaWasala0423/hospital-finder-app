@@ -40,7 +40,7 @@ const Splash: React.FC = () => {
           ],
         );
       }
-    }, 4000);
+    }, 3000);
 
     // Cleanup the timeout to avoid memory leaks
     return () => clearTimeout(timeout);

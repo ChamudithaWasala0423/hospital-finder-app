@@ -66,7 +66,7 @@ const EditProfileScreen = () => {
 
     try {
       const userUid = await AsyncStorage.getItem('UID');
-      console.log(userUid, 'test');
+      // console.log(userUid, 'test');
       if (userUid) {
         const userDetailsCollection = collection(firestore, 'userDetails');
         const q = query(userDetailsCollection, where('UID', '==', userUid));
