@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import DirectionCard from './DirectionCard';
@@ -15,8 +16,10 @@ import {useNavigation} from '@react-navigation/native';
 const Category = () => {
   const [hospitalData, setHospitalData] = useState<any>({results: []});
   const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoading(true);
     Geolocation.getCurrentPosition(
       position => {
         fetchData(position.coords.latitude, position.coords.longitude);
@@ -48,8 +51,10 @@ const Category = () => {
 
         const hospitalsWithPhone = await Promise.all(detailsPromises);
         setHospitalData({results: hospitalsWithPhone});
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching hospital data:', error);
+        setLoading(false);
       }
     };
   }, []);
@@ -87,38 +92,45 @@ const Category = () => {
         <Text style={styles.titleText}>Near You</Text>
       </View>
       <ScrollView>
-        {hospitalData.results
-          .filter(
-            (hospital: any) =>
-              hospital.types[0].includes('hospital') &&
-              hospital.opening_hours?.open_now,
-          )
-          .map(
-            (
-              hospital: {
-                geometry: any;
-                name: string;
-                vicinity: string;
-                types: string[][];
-                phone: string;
-                opening_hours: string;
-                icon: string;
-              },
-              index: React.Key | null | undefined,
-            ) => (
-              <DirectionCard
-                key={index}
-                name={hospital.name}
-                address={hospital.vicinity}
-                type={hospital.types[0]}
-                hospitalPhone={hospital.phone}
-                openingHours={hospital.opening_hours}
-                logo={hospital.icon}
-                latitude={hospital.geometry.location.lat}
-                longitude={hospital.geometry.location.lng}
-              />
-            ),
-          )}
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0057e7" />
+            <Text style={styles.loadingText}>Loading...</Text>
+          </View>
+        ) : (
+          hospitalData.results
+            .filter(
+              (hospital: any) =>
+                hospital.types[0].includes('hospital') &&
+                hospital.opening_hours?.open_now,
+            )
+            .map(
+              (
+                hospital: {
+                  geometry: any;
+                  name: string;
+                  vicinity: string;
+                  types: string[][];
+                  phone: string;
+                  opening_hours: string;
+                  icon: string;
+                },
+                index: React.Key | null | undefined,
+              ) => (
+                <DirectionCard
+                  key={index}
+                  name={hospital.name}
+                  address={hospital.vicinity}
+                  type={hospital.types[0]}
+                  hospitalPhone={hospital.phone}
+                  openingHours={hospital.opening_hours}
+                  logo={hospital.icon}
+                  latitude={hospital.geometry.location.lat}
+                  longitude={hospital.geometry.location.lng}
+                />
+              ),
+            )
+        )}
       </ScrollView>
     </View>
   );
@@ -245,6 +257,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#0057e7',
   },
   buttontext: {
+    color: '#0057e7',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
     color: '#0057e7',
   },
 });

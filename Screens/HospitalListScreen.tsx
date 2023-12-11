@@ -1,5 +1,12 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import SearchBox from '../Components/SearchBox';
 import MenuBar from '../Components/MenuBar';
@@ -9,8 +16,10 @@ import Geolocation from '@react-native-community/geolocation';
 
 const HospitalListScreen = () => {
   const [hospitalData, setHospitalData] = useState<any>({results: []});
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoading(true);
     Geolocation.getCurrentPosition(
       position => {
         // console.log(position);
@@ -28,8 +37,10 @@ const HospitalListScreen = () => {
         );
         const data = await response.json();
         setHospitalData(data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching hospital data:', error);
+        setLoading(false);
       }
     };
   }, []);
@@ -43,13 +54,20 @@ const HospitalListScreen = () => {
         {/* <MenuBarTwo /> */}
       </View>
       <ScrollView>
-        {hospitalData.results.map(
-          (
-            hospital: {name: string; icon: string},
-            index: React.Key | null | undefined,
-          ) => (
-            <CardList key={index} name={hospital.name} logo={hospital.icon} />
-          ),
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0057e7" />
+            <Text style={styles.loadingText}>Loading...</Text>
+          </View>
+        ) : (
+          hospitalData.results.map(
+            (
+              hospital: {name: string; icon: string},
+              index: React.Key | null | undefined,
+            ) => (
+              <CardList key={index} name={hospital.name} logo={hospital.icon} />
+            ),
+          )
         )}
       </ScrollView>
       <MenuBar />
@@ -75,6 +93,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#0057e7',
   },
 });
 export default HospitalListScreen;

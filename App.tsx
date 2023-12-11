@@ -39,6 +39,7 @@ AppRegistry.registerComponent(appName, () => App);
 
 import {initializeApp} from 'firebase/app';
 import AddProfileData from './Screens/AddProfileData';
+import OfflineScreen from './Screens/OfflineScreen';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAIMt3eNhwh7fRl32lfd7KAhOeKA89aiyk',
@@ -148,6 +149,13 @@ function App(): JSX.Element {
         <Stack.Screen
           name="AddProfileData"
           component={AddProfileData}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        />
+        <Stack.Screen
+          name="OfflineScreen"
+          component={OfflineScreen}
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}

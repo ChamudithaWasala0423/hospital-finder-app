@@ -12,7 +12,6 @@ const PhoneVerification: React.FC = () => {
   };
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/icon.png')} style={styles.imageMain} />
       <View style={styles.textContainer}>
         <Text style={styles.text}> Phone Verification</Text>
       </View>
@@ -31,7 +30,7 @@ const PhoneVerification: React.FC = () => {
 
       <ButtonComponent
         backgroundColor="#0057E7"
-        borderRadius={30}
+        borderRadius={10}
         marginHorizontal={5}
         fontColor="white"
         borderColor="white"
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: '#f2f4f5',
     //flexDirection:'row'
   },
 

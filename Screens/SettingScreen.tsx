@@ -81,7 +81,6 @@ const SettingScreen = () => {
         justifyContent="center">
         <View style={styles.cardContent}>
           <View style={styles.profilePictureContainer}>
-            {/* <Image source={profileImage} style={styles.profilePicture} /> */}
             <View style={styles.profileImg}>
               <Text style={styles.profileText}>{firstLetter}</Text>
             </View>

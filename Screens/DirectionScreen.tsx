@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {AdjustmentsVerticalIcon} from 'react-native-heroicons/outline';
 import SearchNow from '../Components/SearchNow';
@@ -16,8 +17,10 @@ import Geolocation from '@react-native-community/geolocation';
 const DirectionScreen = () => {
   const [hospitalData, setHospitalData] = useState<any>({results: []});
   const [isOpenNow, setIsOpenNow] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoading(true);
     Geolocation.getCurrentPosition(
       position => {
         fetchData(position.coords.latitude, position.coords.longitude);
@@ -49,8 +52,10 @@ const DirectionScreen = () => {
 
         const hospitalsWithPhone = await Promise.all(detailsPromises);
         setHospitalData({results: hospitalsWithPhone});
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching hospital data:', error);
+        setLoading(false);
       }
     };
   }, []);
@@ -79,25 +84,32 @@ const DirectionScreen = () => {
         <Text style={styles.headerText}>Results</Text>
       </View>
       <ScrollView>
-        {hospitalData.results
-          .filter(
-            (hospital: any) =>
-              hospital.types[0].includes('hospital') &&
-              (isOpenNow ? hospital.opening_hours?.open_now : true),
-          )
-          .map((hospital: any, index: React.Key | null | undefined) => (
-            <DirectionCard
-              key={index}
-              name={hospital.name}
-              address={hospital.vicinity}
-              type={hospital.types[0]}
-              hospitalPhone={hospital.phone}
-              openingHours={hospital.opening_hours}
-              logo={hospital.icon}
-              latitude={hospital.geometry.location.lat}
-              longitude={hospital.geometry.location.lng}
-            />
-          ))}
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0057e7" />
+            <Text style={styles.loadingText}>Loading...</Text>
+          </View>
+        ) : (
+          hospitalData.results
+            .filter(
+              (hospital: any) =>
+                hospital.types[0].includes('hospital') &&
+                (isOpenNow ? hospital.opening_hours?.open_now : true),
+            )
+            .map((hospital: any, index: React.Key | null | undefined) => (
+              <DirectionCard
+                key={index}
+                name={hospital.name}
+                address={hospital.vicinity}
+                type={hospital.types[0]}
+                hospitalPhone={hospital.phone}
+                openingHours={hospital.opening_hours}
+                logo={hospital.icon}
+                latitude={hospital.geometry.location.lat}
+                longitude={hospital.geometry.location.lng}
+              />
+            ))
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -146,6 +158,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     padding: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#0057e7',
   },
 });
 

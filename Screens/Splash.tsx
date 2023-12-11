@@ -1,19 +1,50 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Image, ProgressBarAndroid} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ProgressBarAndroid,
+  Alert,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import NetInfo from '@react-native-community/netinfo';
 
 const Splash: React.FC = () => {
   const navigation = useNavigation();
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
+    const checkInternetConnection = async () => {
+      const netInfoState = await NetInfo.fetch();
+      setIsConnected(netInfoState.isConnected);
+    };
+
+    checkInternetConnection();
+
     const timeout = setTimeout(() => {
-      navigation.navigate('Login');
+      if (isConnected) {
+        navigation.navigate('Login');
+      } else {
+        Alert.alert(
+          'No Internet Connection',
+          'Please check your internet connection and try again.',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                navigation.navigate('OfflineScreen');
+              },
+            },
+          ],
+        );
+      }
     }, 4000);
 
     // Cleanup the timeout to avoid memory leaks
     return () => clearTimeout(timeout);
-  }, [navigation]);
+  }, [isConnected, navigation]);
 
   return (
     <View style={styles.container}>
