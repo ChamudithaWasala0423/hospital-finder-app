@@ -94,7 +94,7 @@ const Login: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-          <Text>Frogot Password?</Text>
+          <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.mainButton} onPress={handleLoginPress}>
@@ -231,6 +231,10 @@ const styles = StyleSheet.create({
     top: '25%',
     marginRight: 40,
     marginTop: 40,
+  },
+  forgotText: {
+    color: '#0057e7',
+    fontWeight: 'bold',
   },
 });
 export default Login;

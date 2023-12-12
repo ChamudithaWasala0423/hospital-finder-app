@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-// ForgotPasswordScreen.tsx
 
 import React, {useState} from 'react';
 import {View, Text, TextInput, Alert, StyleSheet} from 'react-native';
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    color: 'black', // Set text color to black
+    color: 'black',
     marginBottom: 10,
     fontWeight: 'bold',
     fontSize: 15,
@@ -64,12 +63,12 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width: '80%',
-    borderColor: 'black', // Set input border color to black
+    borderColor: 'black',
     borderWidth: 1,
     paddingLeft: 10,
     marginBottom: 20,
     color: 'black',
-    borderRadius: 10, // Set input text color to black
+    borderRadius: 10,
   },
   subBack: {
     width: '100%',

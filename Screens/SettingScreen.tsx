@@ -281,7 +281,8 @@ const SettingScreen = () => {
               {aboutContent ? (
                 <>
                   <Text style={styles.modalTitle}>About</Text>
-                  <Text style={styles.modalTitle}>
+                  <Text style={styles.modalItem}>Hospital Finder 1.1.0</Text>
+                  <Text style={styles.modalItem}>
                     Developer Info - Group 07
                   </Text>
                   <Text style={styles.modalItem}>{aboutContent}</Text>
@@ -362,7 +363,7 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     borderBottomColor: 'black',
-    borderBottomWidth: 1, // or adjust as needed
+    borderBottomWidth: 1,
     width: '100%',
     marginVertical: 30,
   },
@@ -394,6 +395,7 @@ const styles = StyleSheet.create({
     maxHeight: '80%',
   },
   modalTitle: {
+    color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
@@ -401,6 +403,7 @@ const styles = StyleSheet.create({
   modalItem: {
     fontSize: 16,
     marginBottom: 5,
+    color: 'gray',
   },
   modalCloseButton: {
     backgroundColor: '#0057e7',
