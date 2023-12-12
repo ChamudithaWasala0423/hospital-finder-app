@@ -86,19 +86,19 @@ const SignUp: React.FC = () => {
             Sign in
           </Text>
         </Text>
-        <View style={styles.lineback}>
+        {/* <View style={styles.lineback}>
           <View style={styles.line} />
           <Text style={{color: 'gray', margin: 10}}>or</Text>
           <View style={styles.line} />
-        </View>
+        </View> */}
       </View>
       <View style={styles.subButtonBack}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.mainButtonTwo}
           onPress={() => navigation.navigate('PhoneVerification')}>
           <PhoneIcon size={20} color={'black'} />
           <Text style={styles.signinButtonTwo}>Continue with Phone</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     backgroundColor: 'white',
     borderRadius: 10,
-    color: 'black'
+    color: 'black',
   },
   mainButton: {
     width: '85%',
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     right: 10,
     top: '25%',
     marginRight: 40,
-    marginTop: 22,
+    marginTop: 50,
   },
 });
 export default SignUp;

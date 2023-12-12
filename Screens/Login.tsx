@@ -30,24 +30,31 @@ const Login: React.FC = () => {
   const handleLoginPress = async () => {
     try {
       // Sign in user with email and password
-      const userCredential = await auth().signInWithEmailAndPassword(email, pass);
-      
+      const userCredential = await auth().signInWithEmailAndPassword(
+        email,
+        pass,
+      );
+
       // Extract UID from the userCredential
       const userUid = userCredential.user.uid;
-  
+
       // Save the UID to AsyncStorage
       await AsyncStorage.setItem('UID', userUid);
       const userUidread = await AsyncStorage.getItem('UID');
       console.log(userUidread);
-  
+
       // If successful, show a success message or navigate to the next screen
       Alert.alert('Success', 'Login successful!');
-      
+
       navigation.navigate('Home');
     } catch (error: any) {
       // Check for custom error message based on error code
-      let errorMessage = 'Incorrect username or password. Please check your credentials.';
-      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+      let errorMessage =
+        'Incorrect username or password. Please check your credentials.';
+      if (
+        error.code === 'auth/invalid-credential' ||
+        error.code === 'auth/wrong-password'
+      ) {
         Alert.alert('Error', errorMessage);
       } else {
         // For other errors, show the original error message
@@ -55,7 +62,7 @@ const Login: React.FC = () => {
       }
     }
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.MainBox}>
@@ -85,6 +92,10 @@ const Login: React.FC = () => {
             <EyeSlashIcon size={24} color="gray" />
           )}
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+          <Text>Frogot Password?</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.mainButton} onPress={handleLoginPress}>
           <Text style={styles.signinButton}>Sign in</Text>
@@ -97,20 +108,20 @@ const Login: React.FC = () => {
             Sign up
           </Text>
         </Text>
-        <View style={styles.lineback}>
+        {/* <View style={styles.lineback}>
           <View style={styles.line} />
           <Text style={{color: 'gray', margin: 10}}>or</Text>
           <View style={styles.line} />
-        </View>
+        </View> */}
       </View>
-      <View style={styles.subButtonBack}>
+      {/* <View style={styles.subButtonBack}>
         <TouchableOpacity
           style={styles.mainButtonTwo}
           onPress={() => navigation.navigate('ForgotPasswordScreen')}>
           <PhoneIcon size={20} color={'black'} />
           <Text style={styles.signinButtonTwo}>Continue with Phone</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
@@ -153,7 +164,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     backgroundColor: 'white',
     borderRadius: 10,
-    color: 'black'
+    color: 'black',
   },
   mainButton: {
     width: '85%',
@@ -219,7 +230,7 @@ const styles = StyleSheet.create({
     right: 10,
     top: '25%',
     marginRight: 40,
-    marginTop: 22,
+    marginTop: 40,
   },
 });
 export default Login;
