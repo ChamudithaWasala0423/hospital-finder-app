@@ -281,7 +281,7 @@ const SettingScreen = () => {
               {aboutContent ? (
                 <>
                   <Text style={styles.modalTitle}>About</Text>
-                  <Text style={styles.modalItem}>Hospital Finder 1.1.0</Text>
+                  <Text style={styles.modalItem}>Hospital Finder 1.1.1</Text>
                   <Text style={styles.modalItem}>
                     Developer Info - Group 07
                   </Text>

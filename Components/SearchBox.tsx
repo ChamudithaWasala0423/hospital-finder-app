@@ -125,7 +125,7 @@ const SearchBox = () => {
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => handleSuggestionPress(item)}>
             <View style={styles.suggestionItem}>
-              <Text>{item.description}</Text>
+              <Text style={styles.suggestItemText}>{item.description}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -189,6 +189,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  suggestItemText: {
+    color: 'black',
   },
 });
 
