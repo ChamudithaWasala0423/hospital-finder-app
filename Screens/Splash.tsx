@@ -14,10 +14,6 @@ import NetInfo from '@react-native-community/netinfo';
 const Splash: React.FC = () => {
   const navigation = useNavigation();
   const [isConnected, setIsConnected] = useState(true);
-  const restartApp = () => {
-    // Perform any necessary cleanup or reset logic here
-    navigation.navigate('Splash'); // Navigate to the initial screen
-  };
 
   useEffect(() => {
     const checkInternetConnection = async () => {
@@ -38,7 +34,7 @@ const Splash: React.FC = () => {
             {
               text: 'OK',
               onPress: () => {
-                onPress: restartApp,
+                checkInternetConnection();
               },
             },
           ],
