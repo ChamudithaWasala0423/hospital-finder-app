@@ -117,7 +117,7 @@ function App(): JSX.Element {
             cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
           }}
         />
-        
+
         <Stack.Screen
           name="ChangePassword"
           component={ChangePassword}
@@ -160,13 +160,6 @@ function App(): JSX.Element {
         <Stack.Screen
           name="AddProfileData"
           component={AddProfileData}
-          options={{
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          }}
-        />
-        <Stack.Screen
-          name="OfflineScreen"
-          component={OfflineScreen}
           options={{
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           }}
