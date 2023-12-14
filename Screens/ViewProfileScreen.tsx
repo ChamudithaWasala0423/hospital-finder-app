@@ -75,7 +75,7 @@ const ViewProfileScreen = () => {
           <ArrowSmallLeftIcon size={25} color="#747474" />
         </TouchableOpacity>
         <View style={styles.boxTwo}>
-          <Text style={styles.heraderText}>Find Your Hospital</Text>
+          <Text style={styles.heraderText}>My Profile</Text>
         </View>
       </View>
 

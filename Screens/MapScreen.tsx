@@ -15,7 +15,6 @@ import axios from 'axios';
 import SearchBox from '../Components/SearchBox';
 import MenuBar from '../Components/MenuBar';
 import polyline from '@mapbox/polyline';
-import MenuBarTwo from '../Components/MenuBarTwo';
 
 interface MarkerData {
   latitude: number;
